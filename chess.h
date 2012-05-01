@@ -42,6 +42,8 @@
 #define RHYPERCUBE  35
 #define GHYPERCUBE  36
 
+
+
 //All class definitions
 typedef struct
 {
@@ -173,6 +175,52 @@ class Board
 				int rotate(int);
 				pos get_position(int);   
 };
+
+// Global declarations
+
+Triangle triangle_r1(RTRIANGLE1, 1, 'S', 'E'); 
+Triangle triangle_r2(RTRIANGLE2, 1, 'S', 'E'); 
+Triangle triangle_r3(RTRIANGLE3, 1, 'S', 'W'); 
+Triangle triangle_r4(RTRIANGLE4, 1, 'S', 'W'); 
+Triangle triangle_r5(RTRIANGLE5, 1, 'S', 'W'); 
+Triangle triangle_r6(RTRIANGLE6, 1, 'S', 'E'); 
+Triangle triangle_g1(GTRIANGLE1, 0, 'N', 'E'); 
+Triangle triangle_g2(GTRIANGLE2, 0, 'N', 'E'); 
+Triangle triangle_g3(GTRIANGLE3, 0, 'N', 'W'); 
+Triangle triangle_g4(GTRIANGLE4, 0, 'N', 'W'); 
+Triangle triangle_g5(GTRIANGLE5, 0, 'N', 'W'); 
+Triangle triangle_g6(GTRIANGLE6, 0, 'N', 'E'); 
+
+Square square_r1(RSQUARE1, 1, 'S');
+Square square_r2(RSQUARE2, 1, 'S');
+Square square_r3(RSQUARE3, 1, 'S');
+Square square_r4(RSQUARE4, 1, 'S');
+Square square_g1(GSQUARE1, 0, 'N');
+Square square_g2(GSQUARE2, 0, 'N');
+Square square_g3(GSQUARE3, 0, 'N');
+Square square_g4(GSQUARE4, 0, 'N');
+
+Slantline sline_r1(RLINESLANT1, 1, '\\');
+Slantline sline_r2(RLINESLANT2, 1, '/');
+Slantline sline_g1(GLINESLANT1, 0, '/');
+Slantline sline_g2(GLINESLANT2, 0, '\\');
+
+Line line_r1(RLINE1, 1, 'V');
+Line line_r2(RLINE2, 1, 'H');
+Line line_g1(GLINE1, 0, 'H');
+Line line_g2(GLINE2, 0, 'V');
+
+Splitter splitter_r(RSPLITTER, 1, 'N');
+Splitter splitter_g(GSPLITTER, 0, 'S');
+
+King king_r(RKING, 1);
+King king_g(GKING, 0);
+
+Gun gun_r(RGUN, 1, 'S');
+Gun gun_g(GGUN, 0, 'N');
+
+Hypercube hypercube_r(RHYPERCUBE, 1);
+Hypercube hypercube_g(GHYPERCUBE, 0);
 
 
 using namespace std;
