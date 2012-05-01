@@ -2,6 +2,7 @@
 #include<iostream>
 
 // All Macros
+
 #define RED 1
 #define Green 0
 #define RTRIANGLE1 1
@@ -41,10 +42,137 @@
 #define RHYPERCUBE  35
 #define GHYPERCUBE  36
 
-
 //All class definitions
+typedef struct
+{
+				int x;
+				int y;
+}pos;
 
 
+class Piece
+{
+				protected:
+								int piece_id;
+								int team;
+
+				public:
+								Piece(int x, int y)
+								{
+												piece_id = x;
+												team = y;
+								}
+								int getId()
+								{
+												return piece_id;
+								}
+								int getTeam()
+								{
+												return team;
+								}
+								virtual void change_orientation(){}			
+} ;
+
+class Triangle : public Piece
+{	
+	char ox;
+	char oy;
+	
+	public:
+				Triangle(int x, int y, char o1, char o2):Piece(x, y)
+				{
+					oy = o1;
+					ox = o2;
+				}
+				void change_orientation();
+};
+
+class Square : public Piece
+{
+	char o;
+	public:
+				Square(int x, int y, char o1):Piece(x, y)
+				{
+				o = o1;
+				}
+				void change_orientation();
+
+};
+
+class Slantline : public Piece
+{
+	char o;	
+	public:
+				Slantline(int x, int y, char o1):Piece(x, y)
+				{
+					o = o1;
+				}
+				void change_orientation();
+};
+
+class Line : public Piece
+{
+	char o;
+	public:
+
+	Line(int x, int y, char o1):Piece(x, y)
+	{
+		o = o1;
+	}
+	void change_orientation();
+};
+
+class Splitter : public Piece
+{
+	char o;
+	public:
+				Splitter(int x, int y, char o1):Piece(x, y)
+				{
+					o = o1;
+				}
+				void change_orientation();
+};
+
+class Gun : public Piece
+{
+	char o;
+	public:
+				Gun(int x, int y, char o1):Piece(x, y)
+				{
+					o = o1;
+				}
+				void change_orientation();
+};
+
+class King : public Piece
+{
+	public:
+				King(int x, int y):Piece(x, y)
+				{
+				}
+				void change_orientation();
+};
+
+class Hypercube : public Piece
+{
+	public:
+				Hypercube(int x, int y):Piece(x, y)
+				{
+				}
+				void change_orientation();
+};
+
+class Board
+{
+				Piece *matrix[9][9];
+				public:
+				Board();
+				void draw();
+				int check_validity(int);
+				int make_move(int, int);
+				int rotate(int);
+				pos get_position(int);   
+};
 
 
 using namespace std;
