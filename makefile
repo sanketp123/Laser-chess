@@ -37,5 +37,5 @@ Gun.o: Gun.cpp
 	$(CC) -c Gun.cpp		
 
 clean:
-	rm *.o	
+	rm *.o Board	
 					
