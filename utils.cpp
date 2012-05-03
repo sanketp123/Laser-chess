@@ -17,6 +17,11 @@ int Board::check_validity(int id)
 void Board::draw()
 {
 		int i = 0, j =0;
+
+		//
+		// Draw the Board.
+		//
+
 		for(i = 0; i < 9; i ++)
 		{
 				for(j = 0; j < 9; j++)
@@ -39,6 +44,30 @@ void Board::draw()
 				}
 				cout << " |" <<endl;
 		}
+
+		//
+		// Print the Orientation of the Pieces.
+		//
+		
+		cout << "\n";
+		
+		for(i = 1; i < 37; i ++)
+		{
+			if(Piece_array[i] != NULL)
+			{
+				Piece_array[i]->print_orientation(i);
+			}
+			else
+			{
+				cout << i << " 0\t"; 
+			}
+				if (i%4 == 0)	
+				{
+					cout << "\n";
+				}
+				
+		}		
+
 }
 
 pos Board::get_position(int id)
@@ -125,7 +154,7 @@ int Board::make_move(int id, int mov_dir)
 
 		}
 
-		if(id == 35 && matrix[i][j] != NULL)
+		if((id == 35 || id == 36) && matrix[i][j] != NULL)
 		{
 			//
 			// Hypercube move. 
@@ -142,6 +171,15 @@ int Board::make_move(int id, int mov_dir)
 			}while(matrix[t_x][t_y] != NULL);
 
 			matrix[t_x][t_y] = matrix[i][j];
+		}
+
+		if(matrix[i][j] != NULL)
+		{
+			//
+			// Some piece will die. Remove it from the Piece_array as well
+			//
+			Piece_array[matrix[i][j]->getId()] = NULL;
+
 		}
 
 		matrix[i][j] = matrix[p.x][p.y];
@@ -165,8 +203,168 @@ int Board::rotate(int id)
 
 }
 
+void Board::action(int id)
+{
+	//
+	// Only Valid for the Gun piece.
+	//
+	
+	Gun * g = (Gun *) Piece_array[id];
+	g -> shoot(this, id);
+}
 
+/*
+ * beam function shoots a beam on the Board.
+ * i is ith row and j is jth column at which the beam currently is
+ * dir = 1 => beam will travel northwards
+ * dir = 2 => beam will travel southwards
+ * dir = 3 => beam will travel eastwards
+ * dir = 4 => beam will travel westwards
+ * */
+void Board::beam(int i, int j, int dir)
+{
+	while(1)
+	{
+		switch(dir)
+		{
+			case 1:
+				i--;
+				break;
+			case 2:
+				i++;
+				break;
+			case 3:
+				j++;
+				break;
+			case 4:
+				j--;			
+		}
+		
+		if( (i >= 0 && i < 9) && (j >= 0 && j < 9) )
+		{
+			if(matrix[i][j] != NULL)
+			{
+				if(can_kill(i, j, dir))
+				{
+					return;
+				}
+			
+			}	
+		}
+		else
+		{
+			return;
+		}		
+	}
+}
 
+/*
+ * can_kill function of class Board takes the row i and column j of the Board
+ * and checks if the piece at the current position can be killed.
+ * A piece cannot be killed it its a mirror with its face towards the beam.
+ * dir gives the direction of the beam
+ * */
+int Board::can_kill(int i, int j, int &dir)
+{
+		int id = matrix[i][j]->getId();
+		int ref;
+		
+		if(id >= 1 && id <=12)
+		{
+			//
+			// Triangular mirror. Checking for reflection.
+			//
+			
+			
+			Triangle * t = (Triangle *) matrix[i][j];
+			ref = t->reflect(dir);
+			
+			if(ref != -1)
+			{
+				//
+				// Beam has to be reflected in the direction ref.
+				//
+				
+				dir = ref;
+				return 0;
+				
+			}	
+		}
+		else if(id >= 13 && id <= 20)
+		{
+			//
+			// Square mirror. Checking for reflection.
+			//
+			
+			Square * s = (Square *) matrix[i][j];
+			ref = s->reflect(dir);
+			
+			if(ref != -1)
+			{
+				//
+				// Beam has to be reflected in the direction ref.
+				//
+				
+				dir = ref;
+				return 0;
+				
+			}	
+		}
+		else if(id == 21 || id == 22 || id == 25 || id ==26)
+		{
+			//
+			// Slant mirror. Find reflection.
+			//
+			
+			Slantline * s = (Slantline *) matrix[i][j];
+			ref = s->reflect(dir);
+			dir = ref;
+			return 0;			
+		}
+		else if(id == 23 || id == 24 || id == 27 || id == 28)
+		{
+			//
+			// Horizontal or Vertical mirror. Find reflection.
+			//
+			
+			Line * l = (Line *) matrix[i][j];
+			ref = l->reflect(dir);
+			dir = ref;
+			return 0;			
+		}
+		else if(id == 29 || id == 30)
+		{
+			//
+			// Beam Splitter. Find reflection.
+			//
+			
+			Splitter * s = (Splitter *) matrix[i][j];
+			ref = s->reflect(this, i, j, dir);
+			dir = ref;
+			return 0;			
+		}
+		else if(id == 35 || id == 36)
+		{
+				//
+				// Hypercube. Kill Nothing.
+				//
+				
+				return 0;
+		}
+		
+		kill(i, j);
+		return 1;
+}
 
+/*
+ * kill function of class Board take the row i and column j of the Board
+ * and kills the piece at that position
+ * */
+void Board::kill(int i, int j)
+{
+	Piece_array[matrix[i][j]->getId()] = NULL;
+	matrix[i][j] = NULL;	
+	
+}
 
 

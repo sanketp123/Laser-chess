@@ -42,8 +42,6 @@
 #define RHYPERCUBE  35
 #define GHYPERCUBE  36
 
-
-
 //All class definitions
 typedef struct
 {
@@ -73,7 +71,26 @@ class Piece
 												return team;
 								}
 								virtual void change_orientation(){}			
-} ;
+								virtual void print_orientation(int){}										   
+								virtual char * get_orientation(int){}			
+};
+
+class Board
+{
+				Piece *matrix[9][9];
+				Piece * Piece_array[37];
+				public:
+				Board();
+				void draw();
+				int check_validity(int);
+				int make_move(int, int);
+				int rotate(int);
+				void action(int);
+				pos get_position(int);   
+				void kill(int, int);
+				int can_kill(int, int, int &);
+				void beam(int, int, int);
+};
 
 class Triangle : public Piece
 {	
@@ -87,6 +104,10 @@ class Triangle : public Piece
 					ox = o2;
 				}
 				void change_orientation();
+				void print_orientation(int);
+			    char * get_orientation(int);			
+				int reflect(int);			
+				
 };
 
 class Square : public Piece
@@ -98,6 +119,9 @@ class Square : public Piece
 				o = o1;
 				}
 				void change_orientation();
+				void print_orientation(int);
+			    char * get_orientation(int);
+			    int reflect(int);						
 
 };
 
@@ -110,6 +134,9 @@ class Slantline : public Piece
 					o = o1;
 				}
 				void change_orientation();
+				void print_orientation(int);
+			    char * get_orientation(int);
+			    int reflect(int);						
 };
 
 class Line : public Piece
@@ -122,6 +149,9 @@ class Line : public Piece
 		o = o1;
 	}
 	void change_orientation();
+	void print_orientation(int);
+	char * get_orientation(int);			
+	int reflect(int);			
 };
 
 class Splitter : public Piece
@@ -133,6 +163,9 @@ class Splitter : public Piece
 					o = o1;
 				}
 				void change_orientation();
+				void print_orientation(int);
+			    char * get_orientation(int);
+				int reflect(Board *, int, int, int);					
 };
 
 class Gun : public Piece
@@ -144,6 +177,9 @@ class Gun : public Piece
 					o = o1;
 				}
 				void change_orientation();
+				void print_orientation(int);
+				void shoot(Board * , int);
+			    char * get_orientation(int);			
 };
 
 class King : public Piece
@@ -153,6 +189,8 @@ class King : public Piece
 				{
 				}
 				void change_orientation();
+				void print_orientation(int);
+			    char * get_orientation(int);			
 };
 
 class Hypercube : public Piece
@@ -162,65 +200,9 @@ class Hypercube : public Piece
 				{
 				}
 				void change_orientation();
+				void print_orientation(int);
+			    char * get_orientation(int);			
 };
-
-class Board
-{
-				Piece *matrix[9][9];
-				public:
-				Board();
-				void draw();
-				int check_validity(int);
-				int make_move(int, int);
-				int rotate(int);
-				pos get_position(int);   
-};
-
-// Global declarations
-
-Triangle triangle_r1(RTRIANGLE1, 1, 'S', 'E'); 
-Triangle triangle_r2(RTRIANGLE2, 1, 'S', 'E'); 
-Triangle triangle_r3(RTRIANGLE3, 1, 'S', 'W'); 
-Triangle triangle_r4(RTRIANGLE4, 1, 'S', 'W'); 
-Triangle triangle_r5(RTRIANGLE5, 1, 'S', 'W'); 
-Triangle triangle_r6(RTRIANGLE6, 1, 'S', 'E'); 
-Triangle triangle_g1(GTRIANGLE1, 0, 'N', 'E'); 
-Triangle triangle_g2(GTRIANGLE2, 0, 'N', 'E'); 
-Triangle triangle_g3(GTRIANGLE3, 0, 'N', 'W'); 
-Triangle triangle_g4(GTRIANGLE4, 0, 'N', 'W'); 
-Triangle triangle_g5(GTRIANGLE5, 0, 'N', 'W'); 
-Triangle triangle_g6(GTRIANGLE6, 0, 'N', 'E'); 
-
-Square square_r1(RSQUARE1, 1, 'S');
-Square square_r2(RSQUARE2, 1, 'S');
-Square square_r3(RSQUARE3, 1, 'S');
-Square square_r4(RSQUARE4, 1, 'S');
-Square square_g1(GSQUARE1, 0, 'N');
-Square square_g2(GSQUARE2, 0, 'N');
-Square square_g3(GSQUARE3, 0, 'N');
-Square square_g4(GSQUARE4, 0, 'N');
-
-Slantline sline_r1(RLINESLANT1, 1, '\\');
-Slantline sline_r2(RLINESLANT2, 1, '/');
-Slantline sline_g1(GLINESLANT1, 0, '/');
-Slantline sline_g2(GLINESLANT2, 0, '\\');
-
-Line line_r1(RLINE1, 1, 'V');
-Line line_r2(RLINE2, 1, 'H');
-Line line_g1(GLINE1, 0, 'H');
-Line line_g2(GLINE2, 0, 'V');
-
-Splitter splitter_r(RSPLITTER, 1, 'N');
-Splitter splitter_g(GSPLITTER, 0, 'S');
-
-King king_r(RKING, 1);
-King king_g(GKING, 0);
-
-Gun gun_r(RGUN, 1, 'S');
-Gun gun_g(GGUN, 0, 'N');
-
-Hypercube hypercube_r(RHYPERCUBE, 1);
-Hypercube hypercube_g(GHYPERCUBE, 0);
 
 
 using namespace std;
