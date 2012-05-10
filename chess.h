@@ -55,12 +55,14 @@ class Piece
 				protected:
 								int piece_id;
 								int team;
+								int value;
 
 				public:
-								Piece(int x, int y)
+								Piece(int x, int y, int z)
 								{
 												piece_id = x;
 												team = y;
+												value = z;
 								}
 								int getId()
 								{
@@ -70,6 +72,11 @@ class Piece
 								{
 												return team;
 								}
+								int getValue()
+								{
+												return value;
+								}	
+		
 								virtual void change_orientation(){}			
 								virtual void print_orientation(int){}										   
 								virtual char * get_orientation(int){}			
@@ -90,6 +97,7 @@ class Board
 				void kill(int, int);
 				int can_kill(int, int, int &);
 				void beam(int, int, int);
+				int stateDifference(Board b1, Board b2);
 };
 
 class Triangle : public Piece
@@ -98,7 +106,7 @@ class Triangle : public Piece
 	char oy;
 	
 	public:
-				Triangle(int x, int y, char o1, char o2):Piece(x, y)
+				Triangle(int x, int y, int z, char o1, char o2):Piece(x, y, z)
 				{
 					oy = o1;
 					ox = o2;
@@ -114,7 +122,7 @@ class Square : public Piece
 {
 	char o;
 	public:
-				Square(int x, int y, char o1):Piece(x, y)
+				Square(int x, int y, int z, char o1):Piece(x, y, z)
 				{
 				o = o1;
 				}
@@ -129,7 +137,7 @@ class Slantline : public Piece
 {
 	char o;	
 	public:
-				Slantline(int x, int y, char o1):Piece(x, y)
+				Slantline(int x, int y, int z, char o1):Piece(x, y, z)
 				{
 					o = o1;
 				}
@@ -144,7 +152,7 @@ class Line : public Piece
 	char o;
 	public:
 
-	Line(int x, int y, char o1):Piece(x, y)
+	Line(int x, int y, int z, char o1):Piece(x, y, z)
 	{
 		o = o1;
 	}
@@ -158,7 +166,7 @@ class Splitter : public Piece
 {
 	char o;
 	public:
-				Splitter(int x, int y, char o1):Piece(x, y)
+				Splitter(int x, int y, int z, char o1):Piece(x, y, z)
 				{
 					o = o1;
 				}
@@ -172,7 +180,7 @@ class Gun : public Piece
 {
 	char o;
 	public:
-				Gun(int x, int y, char o1):Piece(x, y)
+				Gun(int x, int y, int z, char o1):Piece(x, y, z)
 				{
 					o = o1;
 				}
@@ -185,7 +193,7 @@ class Gun : public Piece
 class King : public Piece
 {
 	public:
-				King(int x, int y):Piece(x, y)
+				King(int x, int y, int z):Piece(x, y, z)
 				{
 				}
 				void change_orientation();
@@ -196,7 +204,7 @@ class King : public Piece
 class Hypercube : public Piece
 {
 	public:
-				Hypercube(int x, int y):Piece(x, y)
+				Hypercube(int x, int y, int z):Piece(x, y, z)
 				{
 				}
 				void change_orientation();

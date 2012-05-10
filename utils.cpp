@@ -367,4 +367,27 @@ void Board::kill(int i, int j)
 	
 }
 
-
+int Board::stateDifference(Board b1, Board b2)
+{
+	int i =0;
+	int sum1 = 0, sum2 = 0;
+	for(i = 0; i < 38; i++)
+	{
+		if(b1.Piece_array[i] != NULL)
+		{
+			if(b1.Piece_array[i]->getTeam() == 1)
+				sum1 += b1.Piece_array[i]->getValue();
+		}
+	}
+	
+	for(i = 0; i < 38; i++)
+	{
+		if(b2.Piece_array[i] != NULL)
+		{
+			if(b2.Piece_array[i]->getTeam() == 1)
+				sum2 += b2.Piece_array[i]->getValue();
+		}
+	}
+	
+	return (sum2 - sum1);
+}
