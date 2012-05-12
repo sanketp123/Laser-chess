@@ -414,3 +414,199 @@ int Board::stateDifference(Board b1, Board b2)
 
 	return (value2 - value1);
 }
+
+void Board::computeMoves(int level)
+{
+	int cost[] = new int[89];
+	int i;
+
+	Board new_state[89];
+
+	for(i = 0; i < 89; i++ )
+	{	
+		new_state[i] = new Board(this);
+	}
+
+	//
+	// Evaluate all the Green moves.
+	//
+	
+	int best_move = computeGreenMoves(new_state, cost);
+
+	new_state[best_move].draw();
+}
+
+
+int Board::computeGreenMoves(Board new_state[89], int cost[89])
+{
+	//
+	// Compute all the possible moves for triangles
+	//
+
+	computePieceMove(7, 12, 0, cost, new_state);
+
+	//
+	// Square Pieces.
+	//
+
+	computePieceMove(17, 20, 30, cost, new_state);
+
+	//
+	// Slant Line and Line 
+	//
+
+	computePieceMove(25, 28, 50, cost, new_state);
+
+	//
+	// Splitter  
+	//
+
+	computePieceMove(30, 30, 70, cost, new_state);
+
+	//
+	// King
+	//
+
+	computePieceMove(32, 32, 75, cost, new_state);
+
+	//
+	// Gun 
+	//
+
+	computePieceMove(34, 34, 79, cost, new_state);
+
+	//
+	// The  following state represents the firing of Laser.
+	//
+
+	if(!new_state[84].check_validity(34))
+	{
+		cost[84] = -999;
+	}
+	else
+	{
+		b.action(34);	
+	}
+
+	//
+	// Hypercube
+	//
+
+	computePieceMove(36, 36, 85, cost, new_state);
+
+	//
+	// Return the best state.
+	//
+	
+	min = -999;
+	int state = -1;
+
+	for(i = 0; i < 89; i++)
+	{
+		if(cost[i] != -999 && cost[i] < min)
+		{
+			min = cost[i];
+			int state;
+		}
+	}
+
+	cout << "[STATE] [COST] " << state << " " << cost << "\n";
+	return state;
+}
+
+int 
+Board::computePieceMove(int id1, int d2, int j, int cost[89], Board new_state[89])
+{
+	int i;
+	
+	for(i = id1; i <= id2; i++)	
+	{
+		if(!new_state[j].check_validity(i))
+		{
+			//
+			// Piece doesn't exist
+			//
+			int m;
+			int n;
+			int p;
+
+			m = j;
+
+			if(i == 32 || i == 36)
+			{
+				//
+				// Hypercube | King :: Only 4 moves
+				//
+					
+				n = j + 4;	
+			}
+			else
+			{
+				//
+				// 5 moves for rest of the Pieces.
+				//
+
+				n = j + 5;
+			}	
+			
+			//
+			// All moves will be invalid
+			//
+
+			for(p = 0; m < n; m++, p++, j++)
+			{
+				cost[j] = -999;
+			}	
+		}
+		else
+		{
+			int m;
+			int n;
+			int p;
+
+			m = j;
+			n = j + 4;
+			
+			//
+			// Perform all the moves.
+			//
+
+			for(p = 0; m < n; m++, p++, j++)
+			{
+				//
+				// p gives the move direction.
+				//
+
+				int invalid = 0;
+
+				invalid = new_state[j].make_move(i, p);
+				if(invalid)
+				{
+					cost[j] = -999;
+				}
+				else
+				{
+					cost[j] = stateDifference(new_state[j]);
+				}
+			}
+
+			//
+			// Perform the rotate move.
+			//
+			
+			if(i != 32 && i != 36)
+			{
+				
+				//
+				// Not applicable to King and Hypercube.
+				//
+				
+				new_state[j].rotate(i);
+				cost[j] = stateDifference(new_state[j]);
+				j++;
+			}	
+		}
+		
+	}
+
+}

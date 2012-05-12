@@ -88,6 +88,11 @@ class Board
 				Piece * Piece_array[37];
 				public:
 				Board();
+				Board(Board * b)
+				{
+					matrix = b->matrix;
+					Piece_array = b->Piece_array;
+				}
 				void draw();
 				int check_validity(int);
 				int make_move(int, int);
@@ -98,6 +103,7 @@ class Board
 				int can_kill(int, int, int &);
 				void beam(int, int, int);
 				int stateDifference(Board b1, Board b2);
+				void computeMoves();
 };
 
 class Triangle : public Piece

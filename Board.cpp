@@ -305,6 +305,8 @@ int main()
 		// CPU move.
 		//
 
+		b.computeMoves(1);
+
 	}
 
     return 0;
