@@ -51,7 +51,7 @@ void Board::draw()
 		
 		cout << "\n";
 		
-		for(i = 1; i < 37; i ++)
+		for(i = 1; i < 37; i++)
 		{
 			if(Piece_array[i] != NULL)
 			{
@@ -371,7 +371,7 @@ int Board::stateDifference(Board b2)
 {
 	int i =0;
 	int value1 = 0, value2 = 0, sum1 = 0, sum2 = 0;
-	for(i = 0; i < 38; i++)
+	for(i = 1; i < 37; i++)
 	{
 		if(Piece_array[i] != NULL)
 		{
@@ -379,8 +379,8 @@ int Board::stateDifference(Board b2)
 				sum1 += Piece_array[i]->getValue();
 		}
 	}
-	
-	for(i = 0; i < 38; i++)
+
+	for(i = 1; i < 37; i++)
 	{
 		if(b2.Piece_array[i] != NULL)
 		{
@@ -388,11 +388,11 @@ int Board::stateDifference(Board b2)
 				sum2 += b2.Piece_array[i]->getValue();
 		}
 	}
-	
+
 	value1 = sum1 + sum2;
 	sum1 = 0, sum2 = 0;	
 
-	for(i = 0; i < 38; i++)
+	for(i = 1; i < 37; i++)
 	{
 		if(Piece_array[i] != NULL)
 		{
@@ -400,8 +400,8 @@ int Board::stateDifference(Board b2)
 				sum1 += Piece_array[i]->getValue();
 		}
 	}
-	
-	for(i = 0; i < 38; i++)
+
+	for(i = 1; i < 37; i++)
 	{
 		if(b2.Piece_array[i] != NULL)
 		{
@@ -417,7 +417,6 @@ int Board::stateDifference(Board b2)
 
 void Board::computeMoves(int level)
 {
-	int cost[] = new int[89];
 	int i;
 
 	Board new_state[89];
@@ -431,19 +430,25 @@ void Board::computeMoves(int level)
 	// Evaluate all the Green moves.
 	//
 	
-	int best_move = computeGreenMoves(new_state, cost);
+	cout << "~~~~~~~~~~~~~ No Probs!!!!\n";
+	
+	int best_move = computeGreenMoves(new_state);
 
+	cout << best_move<<"\n";
 	new_state[best_move].draw();
 }
 
 
-int Board::computeGreenMoves(Board new_state[89], int cost[89])
+int Board::computeGreenMoves(Board new_state[89])
 {
+	int cost[89];	
+
 	//
 	// Compute all the possible moves for triangles
 	//
 
 	computePieceMove(7, 12, 0, cost, new_state);
+	cout << "~~~~~~~~~~~~~ No Probs!!!!\n";
 
 	//
 	// Square Pieces.
@@ -479,15 +484,17 @@ int Board::computeGreenMoves(Board new_state[89], int cost[89])
 	// The  following state represents the firing of Laser.
 	//
 
+	cout << "~~~~~~~~~~~~~ No Probs!!!!\n";
 	if(!new_state[84].check_validity(34))
 	{
 		cost[84] = -999;
 	}
 	else
 	{
-		b.action(34);	
+		new_state[84].action(34);	
 	}
 
+	cout << "~~~~~~~~~~~~~ No Probs!!!!\n";
 	//
 	// Hypercube
 	//
@@ -498,24 +505,25 @@ int Board::computeGreenMoves(Board new_state[89], int cost[89])
 	// Return the best state.
 	//
 	
-	min = -999;
+	int max = -999;;
 	int state = -1;
 
-	for(i = 0; i < 89; i++)
+	for(int i = 0; i < 89; i++)
 	{
-		if(cost[i] != -999 && cost[i] < min)
+		cout << "[STATE] [COST] " << i << " " << cost[i] << "\n";
+		if(cost[i] != -999 && cost[i] > max)
 		{
-			min = cost[i];
-			int state;
+			max = cost[i];
+			state = i;
 		}
 	}
-
-	cout << "[STATE] [COST] " << state << " " << cost << "\n";
+	
+	cout << "[STATE] [MIN_COST] " << state << " " << max << "\n";
 	return state;
 }
 
-int 
-Board::computePieceMove(int id1, int d2, int j, int cost[89], Board new_state[89])
+void 
+Board::computePieceMove(int id1, int id2, int j, int cost[89], Board new_state[89])
 {
 	int i;
 	

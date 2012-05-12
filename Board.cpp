@@ -4,18 +4,18 @@
 // Test set
 //
 
-Triangle triangle_r1(RTRIANGLE1, 1, 'S', 10, 'E'); 
-Triangle triangle_r2(RTRIANGLE2, 1, 'S', 10, 'E'); 
-Triangle triangle_r3(RTRIANGLE3, 1, 'S', 10, 'W'); 
-Triangle triangle_r4(RTRIANGLE4, 1, 'S', 10, 'W'); 
-Triangle triangle_r5(RTRIANGLE5, 1, 'S', 10, 'W'); 
-Triangle triangle_r6(RTRIANGLE6, 1, 'S', 10, 'E'); 
-Triangle triangle_g1(GTRIANGLE1, 0, 'N', 10, 'E'); 
-Triangle triangle_g2(GTRIANGLE2, 0, 'N', 10, 'E'); 
-Triangle triangle_g3(GTRIANGLE3, 0, 'N', 10, 'E'); 
-Triangle triangle_g4(GTRIANGLE4, 0, 'N', 10, 'W'); 
-Triangle triangle_g5(GTRIANGLE5, 0, 'N', 10, 'W'); 
-Triangle triangle_g6(GTRIANGLE6, 0, 'N', 10, 'E'); 
+Triangle triangle_r1(RTRIANGLE1, 1, 10, 'S', 'E'); 
+Triangle triangle_r2(RTRIANGLE2, 1, 10, 'S', 'E'); 
+Triangle triangle_r3(RTRIANGLE3, 1, 10, 'S', 'W'); 
+Triangle triangle_r4(RTRIANGLE4, 1, 10, 'S', 'W'); 
+Triangle triangle_r5(RTRIANGLE5, 1, 10, 'S', 'W'); 
+Triangle triangle_r6(RTRIANGLE6, 1, 10, 'S', 'E'); 
+Triangle triangle_g1(GTRIANGLE1, 0, 10, 'N', 'E'); 
+Triangle triangle_g2(GTRIANGLE2, 0, 10, 'N', 'E'); 
+Triangle triangle_g3(GTRIANGLE3, 0, 10, 'N', 'E'); 
+Triangle triangle_g4(GTRIANGLE4, 0, 10, 'N', 'W'); 
+Triangle triangle_g5(GTRIANGLE5, 0, 10, 'N', 'W'); 
+Triangle triangle_g6(GTRIANGLE6, 0, 10, 'N', 'E'); 
 
 Square square_r1(RSQUARE1, 1, 10, 'S');
 Square square_r2(RSQUARE2, 1, 10, 'S');
@@ -231,7 +231,24 @@ Board::Board()
 
 }
 
+Board::Board(Board * b)
+{
+	int i;
+	int j;
 
+	for ( int i = 0; i < 9; i++)
+	{
+		for( int j = 0; j < 9; j++)
+		{
+			matrix[i][j] = b-> matrix[i][j];
+		}
+	}
+
+	for(i = 1; i <= 36; i++)
+	{
+		Piece_array[i] = b->Piece_array[i];
+	}
+}
 
 int main()
 {
@@ -249,7 +266,7 @@ int main()
     
 		b.draw();
 
-		cout << "\n-----------------------------------------------------------------------------------";
+/*		cout << "\n-----------------------------------------------------------------------------------";
 		cout << "\nEnter Piece no:- \n";
 		cin >> id;
 
@@ -304,8 +321,9 @@ int main()
 		//
 		// CPU move.
 		//
-
+*/
 		b.computeMoves(1);
+		break;
 
 	}
 
