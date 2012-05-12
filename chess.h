@@ -100,9 +100,10 @@ class Board
 				int can_kill(int, int, int &);
 				void beam(int, int, int);
 				int stateDifference(Board);
-				void computeMoves(int);
+				Board computeMoves(int);
 				int computeGreenMoves(Board []);
 				void computePieceMove(int, int, int, int[], Board []);
+				int find_cpu_state(int, int, int, int[]);
 };
 
 class Triangle : public Piece

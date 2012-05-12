@@ -115,7 +115,7 @@ int Board::make_move(int id, int mov_dir)
 						}
 						else
 						{
-								cout << "Invalid Move. Cannot move Up!\n";
+								cout << "Invalid Move. Cannot move Up!" << id << "\n";
 								return 1;
 						}
 						break;
@@ -126,7 +126,7 @@ int Board::make_move(int id, int mov_dir)
 						}
 						else
 						{
-								cout << "Invalid Move. Cannot move Down!\n";
+								cout << "Invalid Move. Cannot move Down!" << id << "\n";
 								return 1;
 						}
 						break;
@@ -137,7 +137,7 @@ int Board::make_move(int id, int mov_dir)
 						}
 						else
 						{
-								cout << "Invalid Move. Cannot move Right!\n";
+								cout << "Invalid Move. Cannot move Right!" << id << "\n";
 								return 1;
 						}
 						break;
@@ -148,7 +148,7 @@ int Board::make_move(int id, int mov_dir)
 						}
 						else
 						{
-								cout << "Invalid Move. Cannot move Left!\n";
+								cout << "Invalid Move. Cannot move Left!" << id << "\n";
 								return 1;
 						}
 
@@ -370,13 +370,16 @@ void Board::kill(int i, int j)
 int Board::stateDifference(Board b2)
 {
 	int i =0;
-	int value1 = 0, value2 = 0, sum1 = 0, sum2 = 0;
+	int value1 = 0, value2 = 0, sum_r_s1 = 0, sum_r_s2 = 0;
+	int sum_g_s1 = 0;
+	int sum_g_s2 = 0;
+
 	for(i = 1; i < 37; i++)
 	{
 		if(Piece_array[i] != NULL)
 		{
 			if(Piece_array[i]->getTeam() == 1)
-				sum1 += Piece_array[i]->getValue();
+				sum_r_s1 += Piece_array[i]->getValue();
 		}
 	}
 
@@ -385,19 +388,19 @@ int Board::stateDifference(Board b2)
 		if(b2.Piece_array[i] != NULL)
 		{
 			if(b2.Piece_array[i]->getTeam() == 1)
-				sum2 += b2.Piece_array[i]->getValue();
+				sum_r_s2 += b2.Piece_array[i]->getValue();
 		}
 	}
 
-	value1 = sum1 + sum2;
-	sum1 = 0, sum2 = 0;	
+//	value1 = sum1 + sum2;
+//	sum1 = 0, sum2 = 0;	
 
 	for(i = 1; i < 37; i++)
 	{
 		if(Piece_array[i] != NULL)
 		{
 			if(Piece_array[i]->getTeam() == 0)
-				sum1 += Piece_array[i]->getValue();
+				sum_g_s1 += Piece_array[i]->getValue();
 		}
 	}
 
@@ -406,16 +409,34 @@ int Board::stateDifference(Board b2)
 		if(b2.Piece_array[i] != NULL)
 		{
 			if(b2.Piece_array[i]->getTeam() == 0)
-				sum2 += b2.Piece_array[i]->getValue();
+				sum_g_s2 += b2.Piece_array[i]->getValue();
 		}
 	}
+	
+	//
+	// Profit => Killing opponent's Piece (+ve)
+	//
 
-	value2 = sum1 + sum2;	
+	value1 = sum_r_s1 - sum_r_s2;
 
-	return (value2 - value1);
+	//
+	// Loss => Own Piece getting killed (-ve)
+	//
+
+	value2 = sum_g_s2 - sum_g_s1;
+
+//	value2 = sum1 + sum2;	
+
+//	return (value2 - value1);
+
+	//
+	// Compute Net Profit (Profit + Loss)
+	//
+
+	return (value1 + value2);
 }
 
-void Board::computeMoves(int level)
+Board Board::computeMoves(int level)
 {
 	int i;
 
@@ -430,12 +451,11 @@ void Board::computeMoves(int level)
 	// Evaluate all the Green moves.
 	//
 	
-	cout << "~~~~~~~~~~~~~ No Probs!!!!\n";
-	
 	int best_move = computeGreenMoves(new_state);
 
 	cout << best_move<<"\n";
-	new_state[best_move].draw();
+	//new_state[best_move].draw();
+	return new_state[best_move];
 }
 
 
@@ -448,7 +468,6 @@ int Board::computeGreenMoves(Board new_state[89])
 	//
 
 	computePieceMove(7, 12, 0, cost, new_state);
-	cout << "~~~~~~~~~~~~~ No Probs!!!!\n";
 
 	//
 	// Square Pieces.
@@ -484,17 +503,16 @@ int Board::computeGreenMoves(Board new_state[89])
 	// The  following state represents the firing of Laser.
 	//
 
-	cout << "~~~~~~~~~~~~~ No Probs!!!!\n";
 	if(!new_state[84].check_validity(34))
 	{
 		cost[84] = -999;
 	}
 	else
 	{
-		new_state[84].action(34);	
+		new_state[84].action(34);
+		cost[84] = stateDifference(new_state[84]);
 	}
 
-	cout << "~~~~~~~~~~~~~ No Probs!!!!\n";
 	//
 	// Hypercube
 	//
@@ -507,6 +525,7 @@ int Board::computeGreenMoves(Board new_state[89])
 	
 	int max = -999;;
 	int state = -1;
+	int count = 0;
 
 	for(int i = 0; i < 89; i++)
 	{
@@ -515,10 +534,26 @@ int Board::computeGreenMoves(Board new_state[89])
 		{
 			max = cost[i];
 			state = i;
+			count = 1;
+		}
+		else if(cost[i] == max)
+		{
+			count++;
 		}
 	}
 	
-	cout << "[STATE] [MIN_COST] " << state << " " << max << "\n";
+	cout << "[STATE] [MAX_COST] [COUNT] " << state << " " << max << " " << count << "\n";
+
+	if(count > 1)
+	{
+		//
+		// Randomization
+		//
+
+		state = find_cpu_state(state, max, count, cost);
+	}	
+	
+	cout << "Next state ::- " << state << "\n";
 	return state;
 }
 
@@ -579,7 +614,7 @@ Board::computePieceMove(int id1, int id2, int j, int cost[89], Board new_state[8
 			// Perform all the moves.
 			//
 
-			for(p = 0; m < n; m++, p++, j++)
+			for(p = 1; m < n; m++, p++, j++)
 			{
 				//
 				// p gives the move direction.
@@ -596,7 +631,9 @@ Board::computePieceMove(int id1, int id2, int j, int cost[89], Board new_state[8
 				{
 					cost[j] = stateDifference(new_state[j]);
 				}
+
 			}
+
 
 			//
 			// Perform the rotate move.
@@ -618,3 +655,23 @@ Board::computePieceMove(int id1, int id2, int j, int cost[89], Board new_state[8
 	}
 
 }
+
+int 
+Board::find_cpu_state (int state, int max, int count, int cost[89])
+{
+	int rand_state[count];
+
+	for(int i = 0, j = 0; i < 89; i++)
+	{
+		if(cost[i] == max)
+		{
+			rand_state[j] = i; 
+			j++;
+		}
+	}
+
+	srand(time(NULL));
+	return rand_state[rand()%count];
+
+}
+
