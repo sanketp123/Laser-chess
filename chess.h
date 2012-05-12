@@ -97,7 +97,7 @@ class Board
 				void kill(int, int);
 				int can_kill(int, int, int &);
 				void beam(int, int, int);
-				int stateDifference(Board b1, Board b2);
+				int stateDifference(Board b1);
 };
 
 class Triangle : public Piece

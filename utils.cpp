@@ -371,16 +371,19 @@ int Board::stateDifference(Board b2)
 {
 	int i =0;
 	int value1 = 0, value2 = 0, sum1 = 0, sum2 = 0;
-	for(i = 0; i < 38; i++)
+	for(i = 1; i < 37; i++)
 	{
 		if(Piece_array[i] != NULL)
 		{
 			if(Piece_array[i]->getTeam() == 1)
-				sum1 += Piece_array[i]->getValue();
+				{
+					sum1 += Piece_array[i]->getValue();
+	//				cout << "id =" << Piece_array[i]->getId() << "value =" << Piece_array[i]->getValue() << "\n";
+				}
 		}
 	}
 	
-	for(i = 0; i < 38; i++)
+	for(i = 1; i < 37; i++)
 	{
 		if(b2.Piece_array[i] != NULL)
 		{
@@ -388,11 +391,11 @@ int Board::stateDifference(Board b2)
 				sum2 += b2.Piece_array[i]->getValue();
 		}
 	}
-	
+     	
 	value1 = sum1 + sum2;
 	sum1 = 0, sum2 = 0;	
 
-	for(i = 0; i < 38; i++)
+	for(i = 1; i < 37; i++)
 	{
 		if(Piece_array[i] != NULL)
 		{
@@ -401,7 +404,7 @@ int Board::stateDifference(Board b2)
 		}
 	}
 	
-	for(i = 0; i < 38; i++)
+	for(i = 1; i < 37; i++)
 	{
 		if(b2.Piece_array[i] != NULL)
 		{
@@ -411,6 +414,5 @@ int Board::stateDifference(Board b2)
 	}
 
 	value2 = sum1 + sum2;	
-
 	return (value2 - value1);
 }
