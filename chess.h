@@ -85,7 +85,7 @@ class Piece
 												return value;
 								}
 
-								virtual void  make_copy(Piece **){}
+								virtual Piece * make_copy(){}
 		
 								virtual void change_orientation(){}			
 								virtual void print_orientation(int){}										   
@@ -129,7 +129,7 @@ class Triangle : public Piece
 					oy = o1;
 					ox = o2;
 				}
-				 void  make_copy(Piece **);
+				Piece *  make_copy();
 				void change_orientation();
 				void print_orientation(int);
 			  char * get_orientation(int);			
@@ -145,7 +145,7 @@ class Square : public Piece
 				{
 				o = o1;
 				}
-				 void  make_copy(Piece **);
+				Piece *  make_copy();
 				void change_orientation();
 				void print_orientation(int);
 			    char * get_orientation(int);
@@ -161,7 +161,7 @@ class Slantline : public Piece
 				{
 					o = o1;
 				}
-				void  make_copy(Piece **);
+				Piece *  make_copy();
 				void change_orientation();
 				void print_orientation(int);
 			    char * get_orientation(int);
@@ -177,7 +177,7 @@ class Line : public Piece
 	{
 		o = o1;
 	}
-	void  make_copy(Piece **);
+	Piece *  make_copy();
 	void change_orientation();
 	void print_orientation(int);
 	char * get_orientation(int);			
@@ -192,7 +192,7 @@ class Splitter : public Piece
 				{
 					o = o1;
 				}
-				 void  make_copy(Piece **);
+				Piece *  make_copy();
 				void change_orientation();
 				void print_orientation(int);
 			    char * get_orientation(int);
@@ -207,7 +207,7 @@ class Gun : public Piece
 				{
 					o = o1;
 				}
-				void  make_copy(Piece **);
+				Piece *  make_copy();
 				void change_orientation();
 				void print_orientation(int);
 				void shoot(Board * , int);
@@ -220,7 +220,7 @@ class King : public Piece
 				King(int x, int y, int z):Piece(x, y, z)
 				{
 				}
-				void  make_copy(Piece **);
+				Piece *  make_copy();
 				void change_orientation();
 				void print_orientation(int);
 			    char * get_orientation(int);			
@@ -232,7 +232,7 @@ class Hypercube : public Piece
 				Hypercube(int x, int y, int z):Piece(x, y, z)
 				{
 				}
-				void  make_copy(Piece **);
+				Piece *  make_copy();
 				void change_orientation();
 				void print_orientation(int);
 			    char * get_orientation(int);			

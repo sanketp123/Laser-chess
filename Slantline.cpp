@@ -1,12 +1,13 @@
 #include "chess.h"
 
-void Slantline::make_copy(Piece ** entry)
+Piece * Slantline::make_copy()
 {
 	int piece_id = getId();
 	int team = getTeam();
 	int value = getValue();
 	Slantline  * T = new Slantline(piece_id, team, value, o);
-	entry = (Piece **) &T;
+	return (Piece *) T;
+	//entry = (Piece **) &T;
 	//array[piece_id] = &T;
 	//Piece * p = & T;
 	//return p;

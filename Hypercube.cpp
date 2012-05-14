@@ -1,12 +1,13 @@
 #include "chess.h"
 
-void Hypercube::make_copy(Piece ** entry)
+Piece * Hypercube::make_copy()
 {
 	int piece_id = getId();
 	int team = getTeam();
 	int value = getValue();
 	Hypercube * T = new Hypercube(piece_id, team, value);
-	entry = (Piece **) &T;
+	return (Piece *) T;
+	//entry = (Piece **) &T;
 	//array[piece_id] = &T;
 	//Piece * p = & T;
 	//return p;

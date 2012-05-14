@@ -472,16 +472,16 @@ Board Board::computeMoves(int level)
 				int i;
 				int cost[89];	
 
-				Board * new_state[89];
+				Board new_state[89];
 
 				for(i = 0; i < 89; i++ )
 				{
-								new_state[i] = new Board();
-								cout << i << "\n";
-								new_state[i]->initialize(this);
+					//			new_state[i] = new Board();
+				//				cout << i << "\n";
+								new_state[i].initialize(this);
 				}
 
-/*				//
+				//
 				// Evaluate all the Green moves.
 				//
 
@@ -489,7 +489,7 @@ Board Board::computeMoves(int level)
 
 				cout << best_move<<"\n";
 				//new_state[best_move].draw();
-				return new_state[best_move];*/
+				return new_state[best_move];
 }
 
 
@@ -501,13 +501,8 @@ int Board::computeGreenMoves(Board new_state[89], int level, int cost[89])
 								//
 								// Compute all the possible moves for triangles
 								//
-				cout << "222222222222222222222\n";
-				draw();
 
 								computePieceMove(7, 12, 0, cost, new_state, 0);
-				cout << "222222222222222222222\n";
-				draw();
-				exit(0);
 								//
 								// Square Pieces.
 								//
@@ -724,6 +719,7 @@ int Board::computeRedMoves(Board new_state[89], int level, int cost[89])
 								//
 
 								computePieceMove(33, 33, 79, cost, new_state, 1);
+				cout << "333333333333333333\n";
 
 								//
 								// The  following state represents the firing of Laser.
@@ -742,9 +738,11 @@ int Board::computeRedMoves(Board new_state[89], int level, int cost[89])
 								//
 								// Hypercube
 								//
+				cout << "333333333333333333\n";
 
 								computePieceMove(35, 35, 85, cost, new_state, 1);
 
+				cout << "333333333333333333\n";
 								//
 								// Return the best state.
 								//
@@ -950,8 +948,8 @@ Board::computeNextLevelMoves(int id1, int id2, int j, int turn, int level, Board
 
 																if(turn)
 																{
-																				cout << "1111111111111111111\n";
-																				new_state[j].draw();
+																				//cout << "1111111111111111111\n";
+																				//new_state[j].draw();
 																				state = new_state[j].computeRedMoves(new_state1, level, cost1);
 																}
 																else
@@ -1092,7 +1090,7 @@ Board::computePieceMove(int id1, int id2, int j, int cost[89], Board new_state[8
 												// Perform the rotate move.
 												//
 
-												if(i != 32 && i != 36)
+												if(i != 32 && i != 36 && i != 35 && i!= 31)
 												{
 
 																//

@@ -128,6 +128,11 @@ Board::Board()
 		{
 			matrix[i][j] = NULL;
 		}
+	
+	for(int i = 1; i <= 36; i++)
+	{
+		Piece_array[i] = NULL;
+	}
 }
 
 void
@@ -272,11 +277,7 @@ Board::initialize(Board * b)
 {
 	int i;
 	int j;
-	for(i = 1; i <= 36; i++)
-	{
-		Piece_array[i] = NULL;
-	}
-	cout<<"Here\n";
+//	cout<<"Here\n";
 	for ( i = 0; i < 9; i++)
 	{
 		for( j = 0; j < 9; j++)
@@ -284,10 +285,10 @@ Board::initialize(Board * b)
 			if(b->matrix[i][j] != NULL)
 			{
 				matrix[i][j] = new Piece();
-				b-> matrix[i][j]->make_copy(&matrix[i][j]);
-				cout<<i << " " << j <<"\n";
-			  cout<<matrix[i][j]->getId()<<"\n";
-				exit(0);
+				matrix[i][j] = b-> matrix[i][j]->make_copy();
+			//	cout<<i << " " << j <<"\n";
+			 // cout<<matrix[i][j]->getId()<<"\n";
+			//	exit(0);
 				Piece_array[matrix[i][j]->getId()] = matrix[i][j];
 			//	cout<<i << " " << j <<"\n";
 				
@@ -419,7 +420,7 @@ int main()
 		//
 	
 		b.draw();
-		b = b.computeMoves(1);
+		b = b.computeMoves(2);
 		b.draw();
 		break;
 

@@ -1,12 +1,13 @@
 #include "chess.h"
 
-void Line::make_copy(Piece ** entry)
+Piece * Line::make_copy()
 {
 	int piece_id = getId();
 	int team = getTeam();
 	int value = getValue();
 	Line  * T = new Line(piece_id, team, value, o);
-	entry = (Piece **) &T;
+	return (Piece *) T;
+	//entry = (Piece **) &T;
 	//array[piece_id] = &T;
 	//Piece * p = & T;
 	//return p;
