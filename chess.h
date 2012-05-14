@@ -58,12 +58,20 @@ class Piece
 								int value;
 
 				public:
+								Piece()
+								{
+												piece_id = -1;
+												team = -1;
+												value = -1;	
+								}
+								
 								Piece(int x, int y, int z)
 								{
 												piece_id = x;
 												team = y;
 												value = z;
 								}
+
 								int getId()
 								{
 												return piece_id;
@@ -75,7 +83,9 @@ class Piece
 								int getValue()
 								{
 												return value;
-								}	
+								}
+
+								virtual void  make_copy(Piece **){}
 		
 								virtual void change_orientation(){}			
 								virtual void print_orientation(int){}										   
@@ -88,8 +98,8 @@ class Board
 				Piece * Piece_array[37];
 				public:
 				Board();
-				Board(Board * b);
-				
+				void initialize(Board * b);
+				void first_init();				
 				void draw();
 				int check_validity(int);
 				int make_move(int, int);
@@ -99,10 +109,12 @@ class Board
 				void kill(int, int);
 				int can_kill(int, int, int &);
 				void beam(int, int, int);
-				int stateDifference(Board);
+				int stateDifference(Board, int);
 				Board computeMoves(int);
-				int computeGreenMoves(Board []);
-				void computePieceMove(int, int, int, int[], Board []);
+				int computeGreenMoves(Board [], int, int []);
+				int computeRedMoves(Board [], int, int []);
+				void computePieceMove(int, int, int, int[], Board [], int);
+				void computeNextLevelMoves(int, int, int, int, int, Board [], int[]);
 				int find_cpu_state(int, int, int, int[]);
 };
 
@@ -117,9 +129,10 @@ class Triangle : public Piece
 					oy = o1;
 					ox = o2;
 				}
+				 void  make_copy(Piece **);
 				void change_orientation();
 				void print_orientation(int);
-			    char * get_orientation(int);			
+			  char * get_orientation(int);			
 				int reflect(int);			
 				
 };
@@ -132,6 +145,7 @@ class Square : public Piece
 				{
 				o = o1;
 				}
+				 void  make_copy(Piece **);
 				void change_orientation();
 				void print_orientation(int);
 			    char * get_orientation(int);
@@ -147,6 +161,7 @@ class Slantline : public Piece
 				{
 					o = o1;
 				}
+				void  make_copy(Piece **);
 				void change_orientation();
 				void print_orientation(int);
 			    char * get_orientation(int);
@@ -162,6 +177,7 @@ class Line : public Piece
 	{
 		o = o1;
 	}
+	void  make_copy(Piece **);
 	void change_orientation();
 	void print_orientation(int);
 	char * get_orientation(int);			
@@ -176,6 +192,7 @@ class Splitter : public Piece
 				{
 					o = o1;
 				}
+				 void  make_copy(Piece **);
 				void change_orientation();
 				void print_orientation(int);
 			    char * get_orientation(int);
@@ -190,6 +207,7 @@ class Gun : public Piece
 				{
 					o = o1;
 				}
+				void  make_copy(Piece **);
 				void change_orientation();
 				void print_orientation(int);
 				void shoot(Board * , int);
@@ -202,6 +220,7 @@ class King : public Piece
 				King(int x, int y, int z):Piece(x, y, z)
 				{
 				}
+				void  make_copy(Piece **);
 				void change_orientation();
 				void print_orientation(int);
 			    char * get_orientation(int);			
@@ -213,6 +232,7 @@ class Hypercube : public Piece
 				Hypercube(int x, int y, int z):Piece(x, y, z)
 				{
 				}
+				void  make_copy(Piece **);
 				void change_orientation();
 				void print_orientation(int);
 			    char * get_orientation(int);			

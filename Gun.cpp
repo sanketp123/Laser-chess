@@ -1,5 +1,17 @@
 #include "chess.h"
 
+void Gun::make_copy(Piece ** entry)
+{
+	int piece_id = getId();
+	int team = getTeam();
+	int value = getValue();
+	Gun * T = new Gun(piece_id, team, value, o);
+	entry = (Piece **) &T;
+	//array[piece_id] = &T;
+	//Piece * p = & T;
+	//return p;
+}
+
 void Gun::change_orientation()
 {
 	if(o == 'N')

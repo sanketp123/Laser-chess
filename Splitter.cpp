@@ -1,5 +1,17 @@
 #include "chess.h"
 
+void Splitter::make_copy(Piece ** entry)
+{
+	int piece_id = getId();
+	int team = getTeam();
+	int value = getValue();
+	Splitter * T = new Splitter(piece_id, team, value, o);
+	entry = (Piece **) &T;
+	//array[piece_id] = &T;
+	//Piece * p = & T;
+	//return p;
+}
+
 void Splitter::change_orientation()
 {
 	if(o == 'N')

@@ -1,5 +1,23 @@
 # include "chess.h"
 
+void Triangle::make_copy(Piece ** entry)
+{
+	int piece_id = getId();
+	int team = getTeam();
+	int value = getValue();
+	Triangle * T = new Triangle(piece_id, team, value, oy, ox);
+	//cout<< T.ox << T.oy << "\n";
+	entry = (Piece **) &T;
+	cout<<"\nTriangle ";
+	T->print_orientation(piece_id);
+	//array[piece_id] = &T;
+	//array[piece_id]->print_orientation(piece_id);
+	//return &T;
+	//Piece * p = & T;
+	//cout<<"Trinagle\n";
+	//return p;
+}
+
 void Triangle::change_orientation()
 {
 	if(oy == 'N' && ox == 'W')

@@ -1,5 +1,5 @@
 #include "chess.h"
-
+# include <stdlib.h>
 //
 // Test set
 //
@@ -108,14 +108,36 @@ Gun gun_g(GGUN, 0, 15, 'N');
 Hypercube hypercube_r(RHYPERCUBE, 1, 5);
 Hypercube hypercube_g(GHYPERCUBE, 0, 5);
 
-
-
 Board::Board()
+{
+/*
+	for(int i = 0; i < 9; i++)
+		for(int j = 0; j < 9; j++)
+		{
+			matrix[i][j] = new Piece();
+
+		}
+	
+	for(int i = 1; i < 37; i++)
+	{
+		Piece_array[i] = new Piece();
+	}
+*/
+	for(int i = 0; i < 9; i++)
+		for(int j = 0; j < 9; j++)
+		{
+			matrix[i][j] = NULL;
+		}
+}
+
+void
+Board::first_init()
 {
 	for(int i = 0; i < 9; i++)
 		for(int j = 0; j < 9; j++)
+		{
 			matrix[i][j] = NULL;
-	
+		}
 	//
 	// Test set
 	//
@@ -245,42 +267,78 @@ Board::Board()
 
 }
 
-Board::Board(Board * b)
+void
+Board::initialize(Board * b)
 {
 	int i;
 	int j;
-
-	for ( int i = 0; i < 9; i++)
+	for(i = 1; i <= 36; i++)
 	{
-		for( int j = 0; j < 9; j++)
+		Piece_array[i] = NULL;
+	}
+	cout<<"Here\n";
+	for ( i = 0; i < 9; i++)
+	{
+		for( j = 0; j < 9; j++)
 		{
-			matrix[i][j] = b-> matrix[i][j];
+			if(b->matrix[i][j] != NULL)
+			{
+				matrix[i][j] = new Piece();
+				b-> matrix[i][j]->make_copy(&matrix[i][j]);
+				cout<<i << " " << j <<"\n";
+			  cout<<matrix[i][j]->getId()<<"\n";
+				exit(0);
+				Piece_array[matrix[i][j]->getId()] = matrix[i][j];
+			//	cout<<i << " " << j <<"\n";
+				
+			}
+			else
+			{
+				matrix[i][j] = NULL;
+			}
 		}
 	}
 
-	for(i = 1; i <= 36; i++)
-	{
-		Piece_array[i] = b->Piece_array[i];
-	}
+//	matrix[0][0]->print_orientation(matrix[0][0]->getId());
+//	draw();
 }
 
 int main()
 {
     Board b;
+		b.first_init();
     //Board b1;
     //b1.Piece_array[0] = NULL;
     //cout << "VALUE = "<< b.stateDifference(b);
     //cout << "\n";	
+
 	//
 	//Sit in an infinite for loop, asking user the next move.
 	//
 	
 	while(1)
 	{
+/*		
 		int id;
 		int mov_rot;
 		int invalid = 0;
-    
+   
+		//
+		// Check if Player / CPU won the game
+		//
+
+		if(!b.check_validity(31))
+		{
+			cout << "King killed. Game over. CPU wins\n";
+			break;
+		}
+		
+		if(!b.check_validity(32))
+		{
+			cout << "King killed. Game over. Player wins\n";
+			break;
+		}
+
 		b.draw();
 
 		cout << "\n-----------------------------------------------------------------------------------";
@@ -332,16 +390,38 @@ int main()
 
 		if(invalid)
 		{
+			//
+			// Player made an invalid move. Player's turn again.
+			//
+
 			continue;
 		}
 
 		//
-		// CPU move.
+		//
+		// Check if Player / CPU won the game
 		//
 
+		if(!b.check_validity(31))
+		{
+			cout << "King killed. Game over. CPU wins\n";
+			break;
+		}
+		
+		if(!b.check_validity(32))
+		{
+			cout << "King killed. Game over. Player wins\n";
+			break;
+		}
+*/
+		//
+		// CPU move.
+		//
+	
+		b.draw();
 		b = b.computeMoves(1);
 		b.draw();
-//		break;
+		break;
 
 	}
 

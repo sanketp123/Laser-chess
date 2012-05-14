@@ -1,5 +1,17 @@
 #include "chess.h"
 
+void Slantline::make_copy(Piece ** entry)
+{
+	int piece_id = getId();
+	int team = getTeam();
+	int value = getValue();
+	Slantline  * T = new Slantline(piece_id, team, value, o);
+	entry = (Piece **) &T;
+	//array[piece_id] = &T;
+	//Piece * p = & T;
+	//return p;
+}
+
 void Slantline::change_orientation()
 {
 	if(o == '\\')

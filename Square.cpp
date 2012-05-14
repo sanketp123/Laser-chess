@@ -1,5 +1,17 @@
 #include "chess.h"
 
+void Square::make_copy(Piece ** entry)
+{
+	int piece_id = getId();
+	int team = getTeam();
+	int value = getValue();
+	Square * T = new Square(piece_id, team, value, o);
+	entry = (Piece **) &T;
+	//array[piece_id] = &T;
+	//Piece * p = & T;
+	//return p;
+}
+
 void Square::change_orientation()
 {
 	if(o == 'N')
