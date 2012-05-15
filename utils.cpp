@@ -3,97 +3,97 @@
 
 int Board::check_validity(int id)
 {
-				pos p = get_position(id);
-				if(p.x == -1)
-				{
-								return 0;
-				}
-				else
-				{
-								return 1;
-				}
+		pos p = get_position(id);
+		if(p.x == -1)
+		{
+				return 0;
+		}
+		else
+		{
+				return 1;
+		}
 }	
 
 void Board::draw()
 {
-				int i = 0, j =0;
+		int i = 0, j =0;
 
-				//
-				// Draw the Board.
-				//
+		//
+		// Draw the Board.
+		//
 
-				for(i = 0; i < 9; i ++)
+		for(i = 0; i < 9; i ++)
+		{
+				for(j = 0; j < 9; j++)
 				{
-								for(j = 0; j < 9; j++)
+						if(matrix[i][j] != NULL)
+						{
+								if((matrix[i][j]->getId() / 10) == 0)
 								{
-												if(matrix[i][j] != NULL)
-												{
-																if((matrix[i][j]->getId() / 10) == 0)
-																{
-																				cout << " |  " << matrix[i][j]->getId() << " ";
-																}	
-																else
-																{
-																				cout <<" | " << matrix[i][j]->getId() <<" ";
-																}	
-												}		
-												else
-												{
-																cout <<" |    "; 
-												}	
-								}
-								cout << " |" <<endl;
-				}
-
-				//
-				// Print the Orientation of the Pieces.
-				//
-
-				cout << "Pieces :: \n";
-
-				for(i = 1; i < 37; i++)
-				{
-								if(Piece_array[i] != NULL)
-								{
-									Piece_array[i]->print_orientation(i);
-								}
+										cout << " |  " << matrix[i][j]->getId() << " ";
+								}	
 								else
 								{
-												cout << i << " 0\t"; 
-								}
-								if (i%4 == 0)	
-								{
-												cout << "\n";
-								}
+										cout <<" | " << matrix[i][j]->getId() <<" ";
+								}	
+						}		
+						else
+						{
+								cout <<" |    "; 
+						}	
+				}
+				cout << " |" <<endl;
+		}
 
-				}		
+		//
+		// Print the Orientation of the Pieces.
+		//
+
+		cout << "Pieces :: \n";
+
+		for(i = 1; i < 37; i++)
+		{
+				if(Piece_array[i] != NULL)
+				{
+						Piece_array[i]->print_orientation(i);
+				}
+				else
+				{
+						cout << i << " 0\t"; 
+				}
+				if (i%4 == 0)	
+				{
+						cout << "\n";
+				}
+
+		}		
 
 }
 
 pos Board::get_position(int id)
 {
-				int i = 0, j = 0;
-				pos p;
-				p.x = -1;
-				p.y = -1;
+		int i = 0, j = 0;
+		pos p;
+		p.x = -1;
+		p.y = -1;
 
-				for(i = 0; i < 9; i ++)
+		for(i = 0; i < 9; i ++)
+		{
+				for(j = 0; j < 9; j++)
 				{
-								for(j = 0; j < 9; j++)
+						if(matrix[i][j] != NULL)
+						{
+								if(matrix[i][j]->getId() == id)
 								{
-												if(matrix[i][j] != NULL)
-												{
-																if(matrix[i][j]->getId() == id)
-																{
-																				p.x = i;
-																				p.y = j;
-																				return p;
-																}
-												}
-								}	
-				}
+										p.x = i;
+										p.y = j;
+										return p;
+								}
+						}
+				}	
+		}
 
-				return p;
+		return p;
 }
 
 /*
@@ -102,115 +102,115 @@ pos Board::get_position(int id)
  */
 int Board::make_move(int id, int mov_dir)
 {
-				pos p = get_position(id);
-				int i = p.x;
-				int j = p.y;
+		pos p = get_position(id);
+		int i = p.x;
+		int j = p.y;
 
-				switch(mov_dir)	
+		switch(mov_dir)	
+		{
+				case 1:
+						if(i > 0)
+						{
+								i--;
+						}
+						else
+						{
+								cout << "Invalid Move. Cannot move Up!" << id << "\n";
+								return 1;
+						}
+						break;
+				case 2:
+						if(i < 8)
+						{
+								i++;
+						}
+						else
+						{
+								cout << "Invalid Move. Cannot move Down!" << id << "\n";
+								return 1;
+						}
+						break;
+				case 3:
+						if(j < 8)
+						{
+								j++;
+						}
+						else
+						{
+								cout << "Invalid Move. Cannot move Right!" << id << "\n";
+								return 1;
+						}
+						break;
+				case 4:
+						if(j > 0 )
+						{
+								j--;
+						}
+						else
+						{
+								cout << "Invalid Move. Cannot move Left!" << id << "\n";
+								return 1;
+						}
+
+		}
+
+		if((id == 35 || id == 36) && matrix[i][j] != NULL)
+		{
+				//
+				// Hypercube move. 
+				//
+				int t_x;
+				int t_y;
+
+				srand(time(NULL));
+
+				do
 				{
-								case 1:
-												if(i > 0)
-												{
-																i--;
-												}
-												else
-												{
-																cout << "Invalid Move. Cannot move Up!" << id << "\n";
-																return 1;
-												}
-												break;
-								case 2:
-												if(i < 8)
-												{
-																i++;
-												}
-												else
-												{
-																cout << "Invalid Move. Cannot move Down!" << id << "\n";
-																return 1;
-												}
-												break;
-								case 3:
-												if(j < 8)
-												{
-																j++;
-												}
-												else
-												{
-																cout << "Invalid Move. Cannot move Right!" << id << "\n";
-																return 1;
-												}
-												break;
-								case 4:
-												if(j > 0 )
-												{
-																j--;
-												}
-												else
-												{
-																cout << "Invalid Move. Cannot move Left!" << id << "\n";
-																return 1;
-												}
+						t_x = rand()%9;	
+						t_y = rand()%9;
+				}while(matrix[t_x][t_y] != NULL);
 
-				}
+				matrix[t_x][t_y] = matrix[i][j];
+		}
 
-				if((id == 35 || id == 36) && matrix[i][j] != NULL)
-				{
-								//
-								// Hypercube move. 
-								//
-								int t_x;
-								int t_y;
+		if(matrix[i][j] != NULL)
+		{
+				//
+				// Some piece will die. Remove it from the Piece_array as well
+				//
+				Piece_array[matrix[i][j]->getId()] = NULL;
 
-								srand(time(NULL));
+		}
 
-								do
-								{
-												t_x = rand()%9;	
-												t_y = rand()%9;
-								}while(matrix[t_x][t_y] != NULL);
+		matrix[i][j] = matrix[p.x][p.y];
+		matrix[p.x][p.y] = NULL;
 
-								matrix[t_x][t_y] = matrix[i][j];
-				}
-
-				if(matrix[i][j] != NULL)
-				{
-								//
-								// Some piece will die. Remove it from the Piece_array as well
-								//
-								Piece_array[matrix[i][j]->getId()] = NULL;
-
-				}
-
-				matrix[i][j] = matrix[p.x][p.y];
-				matrix[p.x][p.y] = NULL;
-
-				return 0;
+		return 0;
 }
 
 int Board::rotate(int id)
 {
-				pos p = get_position(id);			
-				matrix[p.x][p.y]->change_orientation();
-				if(id == 33 || id == 35)
-				{
-								return 1;
-				}
-				else
-				{
-								return 0;
-				}
+		pos p = get_position(id);			
+		matrix[p.x][p.y]->change_orientation();
+		if(id == 33 || id == 35)
+		{
+				return 1;
+		}
+		else
+		{
+				return 0;
+		}
 
 }
 
 void Board::action(int id)
 {
-				//
-				// Only Valid for the Gun piece.
-				//
+		//
+		// Only Valid for the Gun piece.
+		//
 
-				Gun * g = (Gun *) Piece_array[id];
-				g -> shoot(this, id);
+		Gun * g = (Gun *) Piece_array[id];
+		g -> shoot(this, id);
 }
 
 /*
@@ -223,39 +223,39 @@ void Board::action(int id)
  * */
 void Board::beam(int i, int j, int dir)
 {
-				while(1)
+		while(1)
+		{
+				switch(dir)
 				{
-								switch(dir)
-								{
-												case 1:
-																i--;
-																break;
-												case 2:
-																i++;
-																break;
-												case 3:
-																j++;
-																break;
-												case 4:
-																j--;			
-								}
-
-								if( (i >= 0 && i < 9) && (j >= 0 && j < 9) )
-								{
-												if(matrix[i][j] != NULL)
-												{
-																if(can_kill(i, j, dir))
-																{
-																				return;
-																}
-
-												}	
-								}
-								else
-								{
-												return;
-								}		
+						case 1:
+								i--;
+								break;
+						case 2:
+								i++;
+								break;
+						case 3:
+								j++;
+								break;
+						case 4:
+								j--;			
 				}
+
+				if( (i >= 0 && i < 9) && (j >= 0 && j < 9) )
+				{
+						if(matrix[i][j] != NULL)
+						{
+								if(can_kill(i, j, dir))
+								{
+										return;
+								}
+
+						}	
+				}
+				else
+				{
+						return;
+				}		
+		}
 }
 
 /*
@@ -266,94 +266,94 @@ void Board::beam(int i, int j, int dir)
  * */
 int Board::can_kill(int i, int j, int &dir)
 {
-				int id = matrix[i][j]->getId();
-				int ref;
+		int id = matrix[i][j]->getId();
+		int ref;
 
-				if(id >= 1 && id <=12)
+		if(id >= 1 && id <=12)
+		{
+				//
+				// Triangular mirror. Checking for reflection.
+				//
+
+
+				Triangle * t = (Triangle *) matrix[i][j];
+				ref = t->reflect(dir);
+
+				if(ref != -1)
 				{
-								//
-								// Triangular mirror. Checking for reflection.
-								//
+						//
+						// Beam has to be reflected in the direction ref.
+						//
 
+						dir = ref;
+						return 0;
 
-								Triangle * t = (Triangle *) matrix[i][j];
-								ref = t->reflect(dir);
+				}	
+		}
+		else if(id >= 13 && id <= 20)
+		{
+				//
+				// Square mirror. Checking for reflection.
+				//
 
-								if(ref != -1)
-								{
-												//
-												// Beam has to be reflected in the direction ref.
-												//
+				Square * s = (Square *) matrix[i][j];
+				ref = s->reflect(dir);
 
-												dir = ref;
-												return 0;
-
-								}	
-				}
-				else if(id >= 13 && id <= 20)
+				if(ref != -1)
 				{
-								//
-								// Square mirror. Checking for reflection.
-								//
+						//
+						// Beam has to be reflected in the direction ref.
+						//
 
-								Square * s = (Square *) matrix[i][j];
-								ref = s->reflect(dir);
+						dir = ref;
+						return 0;
 
-								if(ref != -1)
-								{
-												//
-												// Beam has to be reflected in the direction ref.
-												//
+				}	
+		}
+		else if(id == 21 || id == 22 || id == 25 || id ==26)
+		{
+				//
+				// Slant mirror. Find reflection.
+				//
 
-												dir = ref;
-												return 0;
+				Slantline * s = (Slantline *) matrix[i][j];
+				ref = s->reflect(dir);
+				dir = ref;
+				return 0;			
+		}
+		else if(id == 23 || id == 24 || id == 27 || id == 28)
+		{
+				//
+				// Horizontal or Vertical mirror. Find reflection.
+				//
 
-								}	
-				}
-				else if(id == 21 || id == 22 || id == 25 || id ==26)
-				{
-								//
-								// Slant mirror. Find reflection.
-								//
+				Line * l = (Line *) matrix[i][j];
+				ref = l->reflect(dir);
+				dir = ref;
+				return 0;			
+		}
+		else if(id == 29 || id == 30)
+		{
+				//
+				// Beam Splitter. Find reflection.
+				//
 
-								Slantline * s = (Slantline *) matrix[i][j];
-								ref = s->reflect(dir);
-								dir = ref;
-								return 0;			
-				}
-				else if(id == 23 || id == 24 || id == 27 || id == 28)
-				{
-								//
-								// Horizontal or Vertical mirror. Find reflection.
-								//
+				Splitter * s = (Splitter *) matrix[i][j];
+				ref = s->reflect(this, i, j, dir);
+				dir = ref;
+				return 0;			
+		}
+		else if(id == 35 || id == 36)
+		{
+				//
+				// Hypercube. Kill Nothing.
+				//
 
-								Line * l = (Line *) matrix[i][j];
-								ref = l->reflect(dir);
-								dir = ref;
-								return 0;			
-				}
-				else if(id == 29 || id == 30)
-				{
-								//
-								// Beam Splitter. Find reflection.
-								//
+				return 0;
+		}
 
-								Splitter * s = (Splitter *) matrix[i][j];
-								ref = s->reflect(this, i, j, dir);
-								dir = ref;
-								return 0;			
-				}
-				else if(id == 35 || id == 36)
-				{
-								//
-								// Hypercube. Kill Nothing.
-								//
-
-								return 0;
-				}
-
-				kill(i, j);
-				return 1;
+		kill(i, j);
+		return 1;
 }
 
 /*
@@ -362,625 +362,575 @@ int Board::can_kill(int i, int j, int &dir)
  * */
 void Board::kill(int i, int j)
 {
-				Piece_array[matrix[i][j]->getId()] = NULL;
-				matrix[i][j] = NULL;	
+		Piece_array[matrix[i][j]->getId()] = NULL;
+		matrix[i][j] = NULL;	
 
 }
 
 int Board::stateDifference(Board b2, int team)
 {
-				int i =0;
-				int value1 = 0, value2 = 0, sum_r_s1 = 0, sum_r_s2 = 0;
-				int sum_g_s1 = 0;
-				int sum_g_s2 = 0;
+		int i =0;
+		int value1 = 0, value2 = 0, sum_r_s1 = 0, sum_r_s2 = 0;
+		int sum_g_s1 = 0;
+		int sum_g_s2 = 0;
 
-				for(i = 1; i < 37; i++)
+		for(i = 1; i < 37; i++)
+		{
+				if(Piece_array[i] != NULL)
 				{
-								if(Piece_array[i] != NULL)
-								{
-												if(Piece_array[i]->getTeam() == 1)
-																sum_r_s1 += Piece_array[i]->getValue();
-								}
+						if(Piece_array[i]->getTeam() == 1)
+								sum_r_s1 += Piece_array[i]->getValue();
 				}
+		}
 
-				for(i = 1; i < 37; i++)
+		for(i = 1; i < 37; i++)
+		{
+				if(b2.Piece_array[i] != NULL)
 				{
-								if(b2.Piece_array[i] != NULL)
-								{
-												if(b2.Piece_array[i]->getTeam() == 1)
-																sum_r_s2 += b2.Piece_array[i]->getValue();
-								}
+						if(b2.Piece_array[i]->getTeam() == 1)
+								sum_r_s2 += b2.Piece_array[i]->getValue();
 				}
+		}
 
-				//	value1 = sum1 + sum2;
-				//	sum1 = 0, sum2 = 0;	
+		//	value1 = sum1 + sum2;
+		//	sum1 = 0, sum2 = 0;	
 
-				for(i = 1; i < 37; i++)
+		for(i = 1; i < 37; i++)
+		{
+				if(Piece_array[i] != NULL)
 				{
-								if(Piece_array[i] != NULL)
-								{
-												if(Piece_array[i]->getTeam() == 0)
-																sum_g_s1 += Piece_array[i]->getValue();
-								}
+						if(Piece_array[i]->getTeam() == 0)
+								sum_g_s1 += Piece_array[i]->getValue();
 				}
+		}
 
-				for(i = 1; i < 37; i++)
+		for(i = 1; i < 37; i++)
+		{
+				if(b2.Piece_array[i] != NULL)
 				{
-								if(b2.Piece_array[i] != NULL)
-								{
-												if(b2.Piece_array[i]->getTeam() == 0)
-																sum_g_s2 += b2.Piece_array[i]->getValue();
-								}
+						if(b2.Piece_array[i]->getTeam() == 0)
+								sum_g_s2 += b2.Piece_array[i]->getValue();
 				}
+		}
 
-/*				if(team)
-				{
-					//
-					// Red :- state Difference for Player.
-					//
-				
-				//
-				// Profit => Killing opponent's Piece (+ve)
-				//
+		/*				if(team)
+						{
+		//
+		// Red :- state Difference for Player.
+		//
 
-				value1 = sum_r_s2 - sum_r_s1;
+		//
+		// Profit => Killing opponent's Piece (+ve)
+		//
 
-				//
-				// Loss => Own Piece getting killed (-ve)
-				//
+		value1 = sum_r_s2 - sum_r_s1;
 
-				value2 = sum_g_s1 - sum_g_s2;
+		//
+		// Loss => Own Piece getting killed (-ve)
+		//
 
-				//	value2 = sum1 + sum2;	
+		value2 = sum_g_s1 - sum_g_s2;
 
-				//	return (value2 - value1);
-				}
-				else
-				{
-					//
-					// Green :- state Difference for Computer
-					//
-	*/			
+		//	value2 = sum1 + sum2;	
 
-				//
-				// Profit => Killing opponent's Piece (+ve)
-				//
+		//	return (value2 - value1);
+		}
+		else
+		{
+		//
+		// Green :- state Difference for Computer
+		//
+		 */			
 
-				value1 = sum_r_s1 - sum_r_s2;
+		//
+		// Profit => Killing opponent's Piece (+ve)
+		//
 
-				//
-				// Loss => Own Piece getting killed (-ve)
-				//
+		value1 = sum_r_s1 - sum_r_s2;
 
-				value2 = sum_g_s2 - sum_g_s1;
+		//
+		// Loss => Own Piece getting killed (-ve)
+		//
 
-				//	value2 = sum1 + sum2;	
+		value2 = sum_g_s2 - sum_g_s1;
 
-				//	return (value2 - value1);
+		//	value2 = sum1 + sum2;	
+
+		//	return (value2 - value1);
 
 		//		}
 
-				//
-				// Compute Net Profit (Profit + Loss)
-				//
+		//
+		// Compute Net Profit (Profit + Loss)
+		//
 
-				return (value1 + value2);
+		return (value1 + value2);
 }
 
 Board Board::computeMoves(int level)
 {
-				int i;
-				int cost[89];	
+		int i;
+		int cost[89];	
 
-				Board new_state[89];
+		Board new_state[89];
 
-				for(i = 0; i < 89; i++ )
-				{
-					//			new_state[i] = new Board();
+		for(i = 0; i < 89; i++ )
+		{
+				//			new_state[i] = new Board();
 				//				cout << i << "\n";
-								new_state[i].initialize(this);
-				}
+				new_state[i].initialize(this);
+		}
 
-				//
-				// Evaluate all the Green moves.
-				//
+		//
+		// Evaluate all the Green moves.
+		//
 
-				int best_move = computeGreenMoves(new_state, level, cost);
+		int best_move = computeGreenMoves(new_state, level, cost);
 
-				cout << best_move<<"\n";
-				//new_state[best_move].draw();
-				return new_state[best_move];
+		cout << best_move<<"\n";
+		//new_state[best_move].draw();
+		return new_state[best_move];
 }
 
 
 int Board::computeGreenMoves(Board new_state[89], int level, int cost[89])
 {
-				if(level == 1)
+		if(level == 1)
+		{
+
+				//
+				// Compute all the possible moves for triangles
+				//
+
+				computePieceMove(7, 12, 0, cost, new_state, 0);
+				//
+				// Square Pieces.
+				//
+
+				computePieceMove(17, 20, 30, cost, new_state, 0);
+
+				//
+				// Slant Line and Line 
+				//
+
+				computePieceMove(25, 28, 50, cost, new_state, 0);
+
+				//
+				// Splitter  
+				//
+
+				computePieceMove(30, 30, 70, cost, new_state, 0);
+
+				//
+				// King
+				//
+
+				computePieceMove(32, 32, 75, cost, new_state, 0);
+
+				//
+				// Gun 
+				//
+
+				computePieceMove(34, 34, 79, cost, new_state, 0);
+
+				//
+				// The  following state represents the firing of Laser.
+				//
+
+				if(!new_state[84].check_validity(34))
 				{
-
-								//
-								// Compute all the possible moves for triangles
-								//
-
-								computePieceMove(7, 12, 0, cost, new_state, 0);
-								//
-								// Square Pieces.
-								//
-
-								computePieceMove(17, 20, 30, cost, new_state, 0);
-
-								//
-								// Slant Line and Line 
-								//
-
-								computePieceMove(25, 28, 50, cost, new_state, 0);
-
-								//
-								// Splitter  
-								//
-
-								computePieceMove(30, 30, 70, cost, new_state, 0);
-
-								//
-								// King
-								//
-
-								computePieceMove(32, 32, 75, cost, new_state, 0);
-
-								//
-								// Gun 
-								//
-
-								computePieceMove(34, 34, 79, cost, new_state, 0);
-
-								//
-								// The  following state represents the firing of Laser.
-								//
-
-								if(!new_state[84].check_validity(34))
-								{
-												cost[84] = -999;
-								}
-								else
-								{
-												new_state[84].action(34);
-												cost[84] = stateDifference(new_state[84], 0);
-								}
-
-								//
-								// Hypercube
-								//
-
-								computePieceMove(36, 36, 85, cost, new_state, 0);
-
-								//
-								// Return the best state.
-								//
-
+						cost[84] = -999;
 				}
 				else
 				{
-								//
-								// Compute Red moves for each Green move.
-								//
+						new_state[84].action(34);
+						cost[84] = stateDifference(new_state[84], 0);
+				}
 
-								//
-								// Compute all the possible moves for triangles
-								//
+				//
+				// Hypercube
+				//
 
-								computeNextLevelMoves(7, 12, 0, 1, level - 1, new_state, cost);
-								
-								//
-								// Square Pieces.
-								//
+				computePieceMove(36, 36, 85, cost, new_state, 0);
 
-								computeNextLevelMoves(17, 20, 30, 1, level - 1, new_state, cost);
+				//
+				// Return the best state.
+				//
 
-								//
-								// Slant Line and Line 
-								//
+		}
+		else
+		{
+				//
+				// Compute Red moves for each Green move.
+				//
 
-								computeNextLevelMoves(25, 28, 50, 1, level - 1, new_state, cost);
+				//
+				// Compute all the possible moves for triangles
+				//
 
-								//
-								// Splitter  
-								//
+				computeNextLevelMoves(7, 12, 0, 1, level - 1, new_state, cost);
 
-								computeNextLevelMoves(30, 30, 70, 1, level - 1, new_state, cost);
+				//
+				// Square Pieces.
+				//
 
-								//
-								// King
-								//
+				computeNextLevelMoves(17, 20, 30, 1, level - 1, new_state, cost);
 
-								computeNextLevelMoves(32, 32, 75, 1, level - 1, new_state, cost);
+				//
+				// Slant Line and Line 
+				//
 
-								//
-								// Gun 
-								//
+				computeNextLevelMoves(25, 28, 50, 1, level - 1, new_state, cost);
 
-								computeNextLevelMoves(34, 34, 79, 1, level - 1, new_state, cost);
+				//
+				// Splitter  
+				//
 
-								//
-								// The  following state represents the firing of Laser.
-								//
+				computeNextLevelMoves(30, 30, 70, 1, level - 1, new_state, cost);
 
-								if(!new_state[84].check_validity(34))
-								{
-												//
-												// No further computation. Invalid state.
-												//
-												cost[84] = -999;
-								}
-								else
-								{
-												new_state[84].action(34);
+				//
+				// King
+				//
 
-												int l;
+				computeNextLevelMoves(32, 32, 75, 1, level - 1, new_state, cost);
 
-												Board new_state1[89];
-												int cost1[89];
-												int state;
+				//
+				// Gun 
+				//
 
-												for(l = 0; l < 89; l++ )
-												{	
+				computeNextLevelMoves(34, 34, 79, 1, level - 1, new_state, cost);
+
+				//
+				// The  following state represents the firing of Laser.
+				//
+
+				if(!new_state[84].check_validity(34))
+				{
+						//
+						// No further computation. Invalid state.
+						//
+						cost[84] = -999;
+				}
+				else
+				{
+						new_state[84].action(34);
+
+						int l;
+
+						Board new_state1[89];
+						int cost1[89];
+						int state;
+
+						for(l = 0; l < 89; l++ )
+						{	
 								new_state1[l].initialize(&new_state[84]);
-//																new_state1[l] = new Board(&new_state[84]);
-												}
+								//																new_state1[l] = new Board(&new_state[84]);
+						}
 
-												state = new_state[84].computeRedMoves(new_state1, level - 1, cost1);
-												cost[84] = cost1[state];
-								}
-
-
-
-								//
-								// Hypercube
-								//
-
-								computeNextLevelMoves(36, 36, 85, 1, level - 1, new_state, cost);
-
+						state = new_state[84].computeRedMoves(new_state1, level - 1, cost1);
+						cost[84] = cost1[state];
 				}
 
-				int max = -999;
-				int state = -1;
-				int count = 0;
 
-				for(int i = 0; i < 89; i++)
+
+				//
+				// Hypercube
+				//
+
+				computeNextLevelMoves(36, 36, 85, 1, level - 1, new_state, cost);
+
+		}
+
+		int max = -999;
+		int state = -1;
+		int count = 0;
+
+		for(int i = 0; i < 89; i++)
+		{
+				cout << "[STATE] [COST] " << i << " " << cost[i] << "\n";
+				if(cost[i] != -999 && cost[i] > max)
 				{
-								cout << "[STATE] [COST] " << i << " " << cost[i] << "\n";
-								if(cost[i] != -999 && cost[i] > max)
-								{
-												max = cost[i];
-												state = i;
-												count = 1;
-								}
-								else if(cost[i] == max)
-								{
-												count++;
-								}
+						max = cost[i];
+						state = i;
+						count = 1;
 				}
-
-				cout << "[STATE] [MAX_COST] [COUNT] " << state << " " << max << " " << count << "\n";
-
-				if(count > 1)
+				else if(cost[i] == max)
 				{
-								//
-								// Randomization
-								//
+						count++;
+				}
+		}
 
-								state = find_cpu_state(state, max, count, cost);
-				}	
+		cout << "[STATE] [MAX_COST] [COUNT] " << state << " " << max << " " << count << "\n";
 
-				cout << "Next state ::- " << state << "\n";
-				return state;
+		if(count > 1)
+		{
+				//
+				// Randomization
+				//
+
+				state = find_cpu_state(state, max, count, cost);
+		}	
+
+		cout << "Next state ::- " << state << "\n";
+		return state;
 }
 
 int Board::computeRedMoves(Board new_state[89], int level, int cost[89])
 {
-				if(level == 1)
+		if(level == 1)
+		{
+
+				//
+				// Compute all the possible moves for triangles
+				//
+				//				cout << "222222222222222222222\n";
+				//				draw();
+
+				computePieceMove(1, 6, 0, cost, new_state, 1);
+				//				cout << "222222222222222222222\n";
+				//				draw();
+
+				//
+				// Square Pieces.
+				//
+
+				computePieceMove(13, 16, 30, cost, new_state, 1);
+
+				//
+				// Slant Line and Line 
+				//
+
+				computePieceMove(21, 24, 50, cost, new_state, 1);
+
+				//
+				// Splitter  
+				//
+
+				computePieceMove(29, 29, 70, cost, new_state, 1);
+
+				//
+				// King
+				//
+
+				computePieceMove(31, 31, 75, cost, new_state, 1);
+
+				//
+				// Gun 
+				//
+
+				computePieceMove(33, 33, 79, cost, new_state, 1);
+
+				//
+				// The  following state represents the firing of Laser.
+				//
+
+				if(!new_state[84].check_validity(33))
 				{
-
-								//
-								// Compute all the possible moves for triangles
-								//
-				cout << "222222222222222222222\n";
-				draw();
-
-								computePieceMove(1, 6, 0, cost, new_state, 1);
-				cout << "222222222222222222222\n";
-				draw();
-
-								//
-								// Square Pieces.
-								//
-
-								computePieceMove(13, 16, 30, cost, new_state, 1);
-
-								//
-								// Slant Line and Line 
-								//
-
-								computePieceMove(21, 24, 50, cost, new_state, 1);
-
-								//
-								// Splitter  
-								//
-
-								computePieceMove(29, 29, 70, cost, new_state, 1);
-
-								//
-								// King
-								//
-
-								computePieceMove(31, 31, 75, cost, new_state, 1);
-
-								//
-								// Gun 
-								//
-
-								computePieceMove(33, 33, 79, cost, new_state, 1);
-				cout << "333333333333333333\n";
-
-								//
-								// The  following state represents the firing of Laser.
-								//
-
-								if(!new_state[84].check_validity(33))
-								{
-												cost[84] = -999;
-								}
-								else
-								{
-												new_state[84].action(33);
-												cost[84] = stateDifference(new_state[84], 1);
-								}
-
-								//
-								// Hypercube
-								//
-				cout << "333333333333333333\n";
-
-								computePieceMove(35, 35, 85, cost, new_state, 1);
-
-				cout << "333333333333333333\n";
-								//
-								// Return the best state.
-								//
-
+						cost[84] = -999;
 				}
 				else
 				{
-								//
-								// Compute Green moves for all Red moves.
-								//
+						new_state[84].action(33);
+						cost[84] = stateDifference(new_state[84], 1);
+				}
 
-								//
-								// Compute all the possible moves for triangles
-								//
+				//
+				// Hypercube
+				//
 
-								computeNextLevelMoves(1, 6, 0, 0, level - 1, new_state, cost);
+				computePieceMove(35, 35, 85, cost, new_state, 1);
 
-								//
-								// Square Pieces.
-								//
+				//
+				// Return the best state.
+				//
 
-								computeNextLevelMoves(13, 16, 30, 0, level - 1, new_state, cost);
+		}
+		else
+		{
+				//
+				// Compute Green moves for all Red moves.
+				//
 
-								//
-								// Slant Line and Line 
-								//
+				//
+				// Compute all the possible moves for triangles
+				//
 
-								computeNextLevelMoves(21, 24, 50, 0, level - 1, new_state, cost);
+				computeNextLevelMoves(1, 6, 0, 0, level - 1, new_state, cost);
 
-								//
-								// Splitter  
-								//
+				//
+				// Square Pieces.
+				//
 
-								computeNextLevelMoves(29, 29, 70, 0, level - 1, new_state, cost);
+				computeNextLevelMoves(13, 16, 30, 0, level - 1, new_state, cost);
 
-								//
-								// King
-								//
+				//
+				// Slant Line and Line 
+				//
 
-								computeNextLevelMoves(31, 31, 75, 0, level - 1, new_state, cost);
+				computeNextLevelMoves(21, 24, 50, 0, level - 1, new_state, cost);
 
-								//
-								// Gun 
-								//
+				//
+				// Splitter  
+				//
 
-								computeNextLevelMoves(33, 33, 79, 0, level - 1, new_state, cost);
+				computeNextLevelMoves(29, 29, 70, 0, level - 1, new_state, cost);
 
-								//
-								// The  following state represents the firing of Laser.
-								//
+				//
+				// King
+				//
 
-								if(!new_state[84].check_validity(33))
-								{
-												//
-												// No further computation. Invalid state.
-												//
-												cost[84] = -999;
-								}
-								else
-								{
-												new_state[84].action(33);
+				computeNextLevelMoves(31, 31, 75, 0, level - 1, new_state, cost);
 
-												int l;
+				//
+				// Gun 
+				//
 
-												Board new_state1[89];
-												int cost1[89];
-												int state;
+				computeNextLevelMoves(33, 33, 79, 0, level - 1, new_state, cost);
 
-												for(l = 0; l < 89; l++ )
-												{	
+				//
+				// The  following state represents the firing of Laser.
+				//
+
+				if(!new_state[84].check_validity(33))
+				{
+						//
+						// No further computation. Invalid state.
+						//
+						cost[84] = -999;
+				}
+				else
+				{
+						new_state[84].action(33);
+
+						int l;
+
+						Board new_state1[89];
+						int cost1[89];
+						int state;
+
+						for(l = 0; l < 89; l++ )
+						{	
 								new_state1[l].initialize(&new_state[84]);
 								//								new_state1[l] = new Board(&new_state[84]);
-												}
+						}
 
 
-												state = new_state[84].computeGreenMoves(new_state1, level - 1, cost1);
-												cost[84] = cost1[state];
-								}
-
-
-
-								//
-								// Hypercube
-								//
-
-								computeNextLevelMoves(35, 35, 85, 0, level - 1, new_state, cost);
-
+						state = new_state[84].computeGreenMoves(new_state1, level - 1, cost1);
+						cost[84] = cost1[state];
 				}
 
-				int min = 999;
-				int state = -1;
-				int count = 0;
 
-				for(int i = 0; i < 89; i++)
+
+				//
+				// Hypercube
+				//
+
+				computeNextLevelMoves(35, 35, 85, 0, level - 1, new_state, cost);
+
+		}
+
+		int min = 999;
+		int state = -1;
+		int count = 0;
+
+		for(int i = 0; i < 89; i++)
+		{
+				cout << "[STATE] [COST] " << i << " " << cost[i] << "\n";
+				if(cost[i] != -999 && cost[i] <  min)
 				{
-								cout << "[STATE] [COST] " << i << " " << cost[i] << "\n";
-								if(cost[i] != -999 && cost[i] <  min)
-								{
-												min = cost[i];
-												state = i;
-												count = 1;
-								}
-								else if(cost[i] == min)
-								{
-												count++;
-								}
+						min = cost[i];
+						state = i;
+						count = 1;
 				}
-
-				cout << "R[STATE] [MIN_COST] [COUNT] " << state << " " << min << " " << count << "\n";
-
-				if(count > 1)
+				else if(cost[i] == min)
 				{
-								//
-								// Randomization
-								//
+						count++;
+				}
+		}
 
-								state = find_cpu_state(state, min, count, cost);
-				}	
+		cout << "R[STATE] [MIN_COST] [COUNT] " << state << " " << min << " " << count << "\n";
 
-				cout << "RNext state ::- " << state << "\n";
-				//new_state[state].draw();
-				return state;
+		if(count > 1)
+		{
+				//
+				// Randomization
+				//
+
+				state = find_cpu_state(state, min, count, cost);
+		}	
+
+		cout << "RNext state ::- " << state << "\n";
+		//new_state[state].draw();
+		return state;
 }
 
-				void 
+		void 
 Board::computeNextLevelMoves(int id1, int id2, int j, int turn, int level, Board new_state[89], int cost[89])
 {
-				int i;
+		int i;
 
-				for(i = id1; i <= id2; i++)	
+		for(i = id1; i <= id2; i++)	
+		{
+				if(!new_state[j].check_validity(i))
 				{
-								if(!new_state[j].check_validity(i))
-								{
-												//
-												// No further computation. Invalid state.
-												//
+						//
+						// No further computation. Invalid state.
+						//
 
-												//
-												// Piece doesn't exist
-												//
-												int m;
-												int n;
-												int p;
+						//
+						// Piece doesn't exist
+						//
+						int m;
+						int n;
+						int p;
 
-												m = j;
+						m = j;
 
-												if(i == 32 || i == 36)
-												{
-																//
-																// Hypercube | King :: Only 4 moves
-																//
+						if(i == 32 || i == 36 || i == 31 || i == 35)
+						{
+								//
+								// Hypercube | King :: Only 4 moves
+								//
 
-																n = j + 4;	
-												}
-												else
-												{
-																//
-																// 5 moves for rest of the Pieces.
-																//
+								n = j + 4;	
+						}
+						else
+						{
+								//
+								// 5 moves for rest of the Pieces.
+								//
 
-																n = j + 5;
-												}	
+								n = j + 5;
+						}	
 
-												//
-												// All moves will be invalid
-												//
+						//
+						// All moves will be invalid
+						//
 
-												for(p = 0; m < n; m++, p++, j++)
-												{
-																cost[j] = -999;
-												}	
-								}
-								else
-								{
-												int m;
-												int n;
-												int p;
-
-												m = j;
-												n = j + 4;
-
-												//
-												// Perform all the moves.
-												//
-
-												for(p = 1; m < n; m++, p++, j++)
-												{
-																//
-																// p gives the move direction.
-																//
-																new_state[j].make_move(i, p);
-																int l;
-
-																Board new_state1[89];
-																int cost1[89];
-																int state;
-
-																for(l = 0; l < 89; l++ )
-																{	
-								new_state1[l].initialize(&new_state[j]);
-									//											new_state1[l] = new Board(&new_state[j]);
-																}
-
-																if(turn)
-																{
-																				//cout << "1111111111111111111\n";
-																				//new_state[j].draw();
-																				state = new_state[j].computeRedMoves(new_state1, level, cost1);
-																}
-																else
-																{
-																				state = new_state[j].computeGreenMoves(new_state1, level, cost1);
-
-																}
-																
-																new_state[j].draw();
-																cost[j] = cost1[state];
-																new_state1[state].draw();
-																exit(0);///////////////////
-												}
-								}
-
+						for(p = 0; m < n; m++, p++, j++)
+						{
+								cost[j] = -999;
+						}	
 				}
-
-
-				//
-				// Perform the rotate move.
-				//
-
-				if(i != 32 && i != 36)
+				else
 				{
+						int m;
+						int n;
+						int p;
 
+						m = j;
+						n = j + 4;
+
+						//
+						// Perform all the moves.
+						//
+
+						for(p = 1; m < n; m++, p++, j++)
+						{
 								//
-								// Not applicable to King and Hypercube.
+								// p gives the move direction.
 								//
-
-								new_state[j].rotate(i);
-
+								new_state[j].make_move(i, p);
 								int l;
 
 								Board new_state1[89];
@@ -989,145 +939,193 @@ Board::computeNextLevelMoves(int id1, int id2, int j, int turn, int level, Board
 
 								for(l = 0; l < 89; l++ )
 								{	
-								new_state1[l].initialize(&new_state[j]);
-//												new_state1[l] = new Board(&new_state[j]);
+										new_state1[l].initialize(&new_state[j]);
+										//											new_state1[l] = new Board(&new_state[j]);
 								}
 
 								if(turn)
 								{
-												state = new_state[j].computeRedMoves(new_state1, level, cost1);
+										//cout << "1111111111111111111\n";
+										//new_state[j].draw();
+										state = new_state[j].computeRedMoves(new_state1, level, cost1);
 								}
 								else
 								{
-												state = new_state[j].computeGreenMoves(new_state1, level, cost1);		
+										state = new_state[j].computeGreenMoves(new_state1, level, cost1);
+
 								}
 
+								new_state[j].draw();
 								cost[j] = cost1[state];
-								j++;
-				}	
+								new_state1[state].draw();
+								cout << "Here\n";
+								//exit(0);///////////////////
+						}
+				}
+
+
+		//
+		// Perform the rotate move.
+		//
+		cout << i << "\n";
+		if(i != 32 && i != 36 && i != 31 && i!= 35)
+		{
+
+				//
+				// Not applicable to King and Hypercube.
+				//
+
+				new_state[j].rotate(i);
+
+				int l;
+
+				Board new_state1[89];
+				int cost1[89];
+				int state;
+
+				for(l = 0; l < 89; l++ )
+				{	
+						new_state1[l].initialize(&new_state[j]);
+						//												new_state1[l] = new Board(&new_state[j]);
+				}
+
+				if(turn)
+				{
+						state = new_state[j].computeRedMoves(new_state1, level, cost1);
+				}
+				else
+				{
+						state = new_state[j].computeGreenMoves(new_state1, level, cost1);		
+				}
+
+				cost[j] = cost1[state];
+				j++;
+		}	
+		cout << "Here\n";
+		}
 }
 
 
-				void 
+		void 
 Board::computePieceMove(int id1, int id2, int j, int cost[89], Board new_state[89], int team)
 {
-				int i;
+		int i;
 
-				for(i = id1; i <= id2; i++)	
+		for(i = id1; i <= id2; i++)	
+		{
+				if(!new_state[j].check_validity(i))
 				{
-								if(!new_state[j].check_validity(i))
+						//
+						// Piece doesn't exist
+						//
+						int m;
+						int n;
+						int p;
+
+						m = j;
+
+						if(i == 32 || i == 36 || i == 31 || i == 35)
+						{
+								//
+								// Hypercube | King :: Only 4 moves
+								//
+
+								n = j + 4;	
+						}
+						else
+						{
+								//
+								// 5 moves for rest of the Pieces.
+								//
+
+								n = j + 5;
+						}	
+
+						//
+						// All moves will be invalid
+						//
+
+						for(p = 0; m < n; m++, p++, j++)
+						{
+								cost[j] = -999;
+						}	
+				}
+				else
+				{
+						int m;
+						int n;
+						int p;
+
+						m = j;
+						n = j + 4;
+
+						//
+						// Perform all the moves.
+						//
+
+						for(p = 1; m < n; m++, p++, j++)
+						{
+								//
+								// p gives the move direction.
+								//
+
+								int invalid = 0;
+
+								invalid = new_state[j].make_move(i, p);
+								if(invalid)
 								{
-												//
-												// Piece doesn't exist
-												//
-												int m;
-												int n;
-												int p;
-
-												m = j;
-
-												if(i == 32 || i == 36)
-												{
-																//
-																// Hypercube | King :: Only 4 moves
-																//
-
-																n = j + 4;	
-												}
-												else
-												{
-																//
-																// 5 moves for rest of the Pieces.
-																//
-
-																n = j + 5;
-												}	
-
-												//
-												// All moves will be invalid
-												//
-
-												for(p = 0; m < n; m++, p++, j++)
-												{
-																cost[j] = -999;
-												}	
+										cost[j] = -999;
 								}
 								else
 								{
-												int m;
-												int n;
-												int p;
-
-												m = j;
-												n = j + 4;
-
-												//
-												// Perform all the moves.
-												//
-
-												for(p = 1; m < n; m++, p++, j++)
-												{
-																//
-																// p gives the move direction.
-																//
-
-																int invalid = 0;
-
-																invalid = new_state[j].make_move(i, p);
-																if(invalid)
-																{
-																				cost[j] = -999;
-																}
-																else
-																{
-																				cost[j] = stateDifference(new_state[j], team);
-																}
-
-												}
-
-
-												//
-												// Perform the rotate move.
-												//
-
-												if(i != 32 && i != 36 && i != 35 && i!= 31)
-												{
-
-																//
-																// Not applicable to King and Hypercube.
-																//
-																
-																//cout<<"Prob1\n";
-																//draw();
-																new_state[j].rotate(i);
-																//cout<<"Prob2\n";
-																//draw();
-																//exit(0);
-																cost[j] = stateDifference(new_state[j], team);
-																j++;
-												}	
+										cost[j] = stateDifference(new_state[j], team);
 								}
 
+						}
+
+
+						//
+						// Perform the rotate move.
+						//
+
+						if(i != 32 && i != 36 && i != 35 && i!= 31)
+						{
+
+								//
+								// Not applicable to King and Hypercube.
+								//
+
+								//cout<<"Prob1\n";
+								//draw();
+								new_state[j].rotate(i);
+								//cout<<"Prob2\n";
+								//draw();
+								//exit(0);
+								cost[j] = stateDifference(new_state[j], team);
+								j++;
+						}	
 				}
+
+		}
 
 }
 
-				int 
+		int 
 Board::find_cpu_state (int state, int max, int count, int cost[89])
 {
-				int rand_state[count];
+		int rand_state[count];
 
-				for(int i = 0, j = 0; i < 89; i++)
+		for(int i = 0, j = 0; i < 89; i++)
+		{
+				if(cost[i] == max)
 				{
-								if(cost[i] == max)
-								{
-												rand_state[j] = i; 
-												j++;
-								}
+						rand_state[j] = i; 
+						j++;
 				}
+		}
 
-				srand(time(NULL));
-				return rand_state[rand()%count];
+		srand(time(NULL));
+		return rand_state[rand()%count];
 
 }
 

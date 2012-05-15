@@ -319,7 +319,7 @@ int main()
 	
 	while(1)
 	{
-/*		
+		
 		int id;
 		int mov_rot;
 		int invalid = 0;
@@ -340,6 +340,7 @@ int main()
 			break;
 		}
 
+		cout << "In Main\n";	
 		b.draw();
 
 		cout << "\n-----------------------------------------------------------------------------------";
@@ -414,15 +415,14 @@ int main()
 			cout << "King killed. Game over. Player wins\n";
 			break;
 		}
-*/
+
 		//
 		// CPU move.
 		//
-	
 		b.draw();
 		b = b.computeMoves(2);
-		b.draw();
-		break;
+//		b.draw();
+//		break;
 
 	}
 
