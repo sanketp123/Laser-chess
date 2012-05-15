@@ -21,10 +21,12 @@
 #define RSQUARE2   14
 #define RSQUARE3   15
 #define RSQUARE4   16
+#define RSQUARE5   35
 #define GSQUARE1   17
 #define GSQUARE2   18
 #define GSQUARE3   19
 #define GSQUARE4   20
+#define GSQUARE5   36
 #define RLINESLANT1 21
 #define RLINESLANT2 22
 #define RLINE1      23
@@ -39,8 +41,6 @@
 #define GKING       32
 #define RGUN        33
 #define GGUN        34
-#define RHYPERCUBE  35
-#define GHYPERCUBE  36
 
 //All class definitions
 typedef struct
@@ -56,7 +56,7 @@ class Piece
 								int piece_id;
 								int team;
 								int value;
-
+								char name[50];
 				public:
 								Piece()
 								{

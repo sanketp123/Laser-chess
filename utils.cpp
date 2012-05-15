@@ -115,7 +115,7 @@ int Board::make_move(int id, int mov_dir)
 						}
 						else
 						{
-								cout << "Invalid Move. Cannot move Up!" << id << "\n";
+								//cout << "Invalid Move. Cannot move Up!" << id << "\n";
 								return 1;
 						}
 						break;
@@ -126,7 +126,7 @@ int Board::make_move(int id, int mov_dir)
 						}
 						else
 						{
-								cout << "Invalid Move. Cannot move Down!" << id << "\n";
+								//cout << "Invalid Move. Cannot move Down!" << id << "\n";
 								return 1;
 						}
 						break;
@@ -137,7 +137,7 @@ int Board::make_move(int id, int mov_dir)
 						}
 						else
 						{
-								cout << "Invalid Move. Cannot move Right!" << id << "\n";
+								//cout << "Invalid Move. Cannot move Right!" << id << "\n";
 								return 1;
 						}
 						break;
@@ -148,7 +148,7 @@ int Board::make_move(int id, int mov_dir)
 						}
 						else
 						{
-								cout << "Invalid Move. Cannot move Left!" << id << "\n";
+								//cout << "Invalid Move. Cannot move Left!" << id << "\n";
 								return 1;
 						}
 
@@ -487,7 +487,7 @@ Board Board::computeMoves(int level)
 
 		int best_move = computeGreenMoves(new_state, level, cost);
 
-		cout << best_move<<"\n";
+		//cout << best_move<<"\n";
 		//new_state[best_move].draw();
 		return new_state[best_move];
 }
@@ -647,7 +647,7 @@ int Board::computeGreenMoves(Board new_state[89], int level, int cost[89])
 
 		for(int i = 0; i < 89; i++)
 		{
-				cout << "[STATE] [COST] " << i << " " << cost[i] << "\n";
+//				cout << "[STATE] [COST] " << i << " " << cost[i] << "\n";
 				if(cost[i] != -999 && cost[i] > max)
 				{
 						max = cost[i];
@@ -660,7 +660,7 @@ int Board::computeGreenMoves(Board new_state[89], int level, int cost[89])
 				}
 		}
 
-		cout << "[STATE] [MAX_COST] [COUNT] " << state << " " << max << " " << count << "\n";
+//		cout << "[STATE] [MAX_COST] [COUNT] " << state << " " << max << " " << count << "\n";
 
 		if(count > 1)
 		{
@@ -671,7 +671,7 @@ int Board::computeGreenMoves(Board new_state[89], int level, int cost[89])
 				state = find_cpu_state(state, max, count, cost);
 		}	
 
-		cout << "Next state ::- " << state << "\n";
+//		cout << "Next state ::- " << state << "\n";
 		return state;
 }
 
@@ -835,7 +835,7 @@ int Board::computeRedMoves(Board new_state[89], int level, int cost[89])
 
 		for(int i = 0; i < 89; i++)
 		{
-				cout << "[STATE] [COST] " << i << " " << cost[i] << "\n";
+		//		cout << "[STATE] [COST] " << i << " " << cost[i] << "\n";
 				if(cost[i] != -999 && cost[i] <  min)
 				{
 						min = cost[i];
@@ -848,7 +848,7 @@ int Board::computeRedMoves(Board new_state[89], int level, int cost[89])
 				}
 		}
 
-		cout << "R[STATE] [MIN_COST] [COUNT] " << state << " " << min << " " << count << "\n";
+		// cout << "R[STATE] [MIN_COST] [COUNT] " << state << " " << min << " " << count << "\n";
 
 		if(count > 1)
 		{
@@ -859,7 +859,7 @@ int Board::computeRedMoves(Board new_state[89], int level, int cost[89])
 				state = find_cpu_state(state, min, count, cost);
 		}	
 
-		cout << "RNext state ::- " << state << "\n";
+		// cout << "RNext state ::- " << state << "\n";
 		//new_state[state].draw();
 		return state;
 }
@@ -955,10 +955,10 @@ Board::computeNextLevelMoves(int id1, int id2, int j, int turn, int level, Board
 
 								}
 
-								new_state[j].draw();
+								//new_state[j].draw();
 								cost[j] = cost1[state];
-								new_state1[state].draw();
-								cout << "Here\n";
+								//new_state1[state].draw();
+								//cout << "Here\n";
 								//exit(0);///////////////////
 						}
 				}
@@ -967,7 +967,7 @@ Board::computeNextLevelMoves(int id1, int id2, int j, int turn, int level, Board
 		//
 		// Perform the rotate move.
 		//
-		cout << i << "\n";
+		//cout << i << "\n";
 		if(i != 32 && i != 36 && i != 31 && i!= 35)
 		{
 
@@ -1001,7 +1001,7 @@ Board::computeNextLevelMoves(int id1, int id2, int j, int turn, int level, Board
 				cost[j] = cost1[state];
 				j++;
 		}	
-		cout << "Here\n";
+	        //cout << "Here\n";
 		}
 }
 

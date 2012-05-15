@@ -81,10 +81,12 @@ Square square_r1(RSQUARE1, 1, 10, 'S');
 Square square_r2(RSQUARE2, 1, 10, 'S');
 Square square_r3(RSQUARE3, 1, 10, 'S');
 Square square_r4(RSQUARE4, 1, 10, 'S');
+Square square_r5(RSQUARE5, 1, 10, 'S');
 Square square_g1(GSQUARE1, 0, 10, 'N');
 Square square_g2(GSQUARE2, 0, 10, 'N');
 Square square_g3(GSQUARE3, 0, 10, 'N');
 Square square_g4(GSQUARE4, 0, 10, 'N');
+Square square_g5(GSQUARE5, 0, 10, 'N');
 
 Slantline sline_r1(RLINESLANT1, 1, 5, '\\');
 Slantline sline_r2(RLINESLANT2, 1, 5, '/');
@@ -105,8 +107,8 @@ King king_g(GKING, 0, 25);
 Gun gun_r(RGUN, 1, 15, 'S');
 Gun gun_g(GGUN, 0, 15, 'N');
 
-Hypercube hypercube_r(RHYPERCUBE, 1, 5);
-Hypercube hypercube_g(GHYPERCUBE, 0, 5);
+//Hypercube hypercube_r(RHYPERCUBE, 1, 5);
+//Hypercube hypercube_g(GHYPERCUBE, 0, 5);
 
 Board::Board()
 {
@@ -150,7 +152,7 @@ Board::first_init()
 	matrix[0][0] = &triangle_r1;
 	matrix[0][1] = &triangle_r2;
 	matrix[0][2] = &sline_r1; 
-	matrix[0][3] = &hypercube_r;
+	matrix[0][3] = &square_r5;
 	matrix[0][4] = &king_r;
 	matrix[0][5] = &gun_r;
 	matrix[0][6] = &sline_r2;
@@ -180,7 +182,7 @@ Board::first_init()
 	matrix[8][2] = &sline_g1;
 	matrix[8][3] = &gun_g;
 	matrix[8][4] = &king_g;
-	matrix[8][5] = &hypercube_g;
+	matrix[8][5] = &square_g5;
 	matrix[8][6] = &sline_g2;
 	matrix[8][7] = &triangle_g3;
 	matrix[8][8] = &triangle_g4;
@@ -235,7 +237,7 @@ Board::first_init()
 	Piece_array[1] = &triangle_r1;
 	Piece_array[2] = &triangle_r2;
 	Piece_array[21] = &sline_r1; 
-	Piece_array[35] = &hypercube_r;
+	Piece_array[35] = &square_r5;
 	Piece_array[31] = &king_r;
 	Piece_array[33] = &gun_r;
 	Piece_array[22] = &sline_r2;
@@ -265,7 +267,7 @@ Board::first_init()
 	Piece_array[25] = &sline_g1;
 	Piece_array[34] = &gun_g;
 	Piece_array[32] = &king_g;
-	Piece_array[36] = &hypercube_g;
+	Piece_array[36] = &square_g5;
 	Piece_array[26] = &sline_g2;
 	Piece_array[9] = &triangle_g3;
 	Piece_array[10] = &triangle_g4;
@@ -423,7 +425,6 @@ int main()
 		b = b.computeMoves(2);
 //		b.draw();
 //		break;
-
 	}
 
     return 0;
