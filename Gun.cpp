@@ -5,7 +5,7 @@ Piece * Gun::make_copy()
 	int piece_id = getId();
 	int team = getTeam();
 	int value = getValue();
-	Gun * T = new Gun(piece_id, team, value, o);
+	Gun * T = new Gun(getName(), piece_id, team, value, o);
 	return (Piece *) T;
 	//entry = (Piece **) &T;
 	//array[piece_id] = &T;
@@ -35,7 +35,7 @@ void Gun::change_orientation()
 
 void Gun::print_orientation(int id)
 {
-	cout << id << " " << o << "\t";
+	cout << name << " " << id << " " << o << "\t";
 }
 
 char * Gun::get_orientation(int id)

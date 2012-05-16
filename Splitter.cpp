@@ -5,7 +5,7 @@ Piece * Splitter::make_copy()
 	int piece_id = getId();
 	int team = getTeam();
 	int value = getValue();
-	Splitter * T = new Splitter(piece_id, team, value, o);
+	Splitter * T = new Splitter(getName(), piece_id, team, value, o);
 	return (Piece *) T;
 	//entry = (Piece **) &T;
 	//array[piece_id] = &T;
@@ -35,7 +35,7 @@ void Splitter::change_orientation()
 
 void Splitter::print_orientation(int id)
 {
-	cout << id << " " << o << "\t";
+	cout << name << " " << id << " " << o << "\t";
 }
 
 char * Splitter::get_orientation(int id)

@@ -64,51 +64,51 @@ Hypercube hypercube_g(GHYPERCUBE, 0, 5);
 */
 // Global declarations
 
-Triangle triangle_r1(RTRIANGLE1, 1, 10, 'S', 'E'); 
-Triangle triangle_r2(RTRIANGLE2, 1, 10, 'S', 'E'); 
-Triangle triangle_r3(RTRIANGLE3, 1, 10, 'S', 'W'); 
-Triangle triangle_r4(RTRIANGLE4, 1, 10, 'S', 'W'); 
-Triangle triangle_r5(RTRIANGLE5, 1, 10, 'S', 'W'); 
-Triangle triangle_r6(RTRIANGLE6, 1, 10, 'S', 'E'); 
-Triangle triangle_g1(GTRIANGLE1, 0, 10, 'N', 'E'); 
-Triangle triangle_g2(GTRIANGLE2, 0, 10, 'N', 'E'); 
-Triangle triangle_g3(GTRIANGLE3, 0, 10, 'N', 'W'); 
-Triangle triangle_g4(GTRIANGLE4, 0, 10, 'N', 'W'); 
-Triangle triangle_g5(GTRIANGLE5, 0, 10, 'N', 'W'); 
-Triangle triangle_g6(GTRIANGLE6, 0, 10, 'N', 'E'); 
+Triangle triangle_r1("RedTriangle1", RTRIANGLE1, 1, 10, 'S', 'E'); 
+Triangle triangle_r2("RedTriangle2", RTRIANGLE2, 1, 10, 'S', 'E'); 
+Triangle triangle_r3("RedTriangle3", RTRIANGLE3, 1, 10, 'S', 'W'); 
+Triangle triangle_r4("RedTriangle4", RTRIANGLE4, 1, 10, 'S', 'W'); 
+Triangle triangle_r5("RedTriangle5", RTRIANGLE5, 1, 10, 'S', 'W'); 
+Triangle triangle_r6("RedTriangle6", RTRIANGLE6, 1, 10, 'S', 'E'); 
+Triangle triangle_g1("GreenTriangle1", GTRIANGLE1, 0, 10, 'N', 'E'); 
+Triangle triangle_g2("GreenTriangle2", GTRIANGLE2, 0, 10, 'N', 'E'); 
+Triangle triangle_g3("GreenTriangle3", GTRIANGLE3, 0, 10, 'N', 'W'); 
+Triangle triangle_g4("GreenTriangle4", GTRIANGLE4, 0, 10, 'N', 'W'); 
+Triangle triangle_g5("GreenTriangle5", GTRIANGLE5, 0, 10, 'N', 'W'); 
+Triangle triangle_g6("GreenTriangle6", GTRIANGLE6, 0, 10, 'N', 'E'); 
 
-Square square_r1(RSQUARE1, 1, 10, 'S');
-Square square_r2(RSQUARE2, 1, 10, 'S');
-Square square_r3(RSQUARE3, 1, 10, 'S');
-Square square_r4(RSQUARE4, 1, 10, 'S');
-Square square_r5(RSQUARE5, 1, 10, 'S');
-Square square_g1(GSQUARE1, 0, 10, 'N');
-Square square_g2(GSQUARE2, 0, 10, 'N');
-Square square_g3(GSQUARE3, 0, 10, 'N');
-Square square_g4(GSQUARE4, 0, 10, 'N');
-Square square_g5(GSQUARE5, 0, 10, 'N');
+Square square_r1("RedSquare1", RSQUARE1, 1, 10, 'S');
+Square square_r2("RedSquare2", RSQUARE2, 1, 10, 'S');
+Square square_r3("RedSquare3", RSQUARE3, 1, 10, 'S');
+Square square_r4("RedSquare4", RSQUARE4, 1, 10, 'S');
+//Square square_r5("RedSquare5", RSQUARE5, 1, 10, 'S');
+Square square_g1("GreenSquare1", GSQUARE1, 0, 10, 'N');
+Square square_g2("GreenSquare2", GSQUARE2, 0, 10, 'N');
+Square square_g3("GreenSquare3", GSQUARE3, 0, 10, 'N');
+Square square_g4("GreenSquare4", GSQUARE4, 0, 10, 'N');
+//Square square_g5("GreenSquare5", GSQUARE5, 0, 10, 'N');
 
-Slantline sline_r1(RLINESLANT1, 1, 5, '\\');
-Slantline sline_r2(RLINESLANT2, 1, 5, '/');
-Slantline sline_g1(GLINESLANT1, 0, 5, '/');
-Slantline sline_g2(GLINESLANT2, 0, 5, '\\');
+Slantline sline_r1("RedSlantLine1", RLINESLANT1, 1, 5, '\\');
+Slantline sline_r2("RedSlantLine2", RLINESLANT2, 1, 5, '/');
+Slantline sline_g1("GreenSlantLine1", GLINESLANT1, 0, 5, '/');
+Slantline sline_g2("GreenSlantLine2", GLINESLANT2, 0, 5, '\\');
 
-Line line_r1(RLINE1, 1, 5, 'V');
-Line line_r2(RLINE2, 1, 5, 'H');
-Line line_g1(GLINE1, 0, 5, 'H');
-Line line_g2(GLINE2, 0, 5, 'V');
+Line line_r1("RedLine1", RLINE1, 1, 5, 'V');
+Line line_r2("RedLine2", RLINE2, 1, 5, 'H');
+Line line_g1("GreenLine1", GLINE1, 0, 5, 'H');
+Line line_g2("GreenLine2", GLINE2, 0, 5, 'V');
 
-Splitter splitter_r(RSPLITTER, 1, 15, 'N');
-Splitter splitter_g(GSPLITTER, 0, 15, 'S');
+Splitter splitter_r("RedSplitter", RSPLITTER, 1, 15, 'N');
+Splitter splitter_g("GreenSplitter", GSPLITTER, 0, 15, 'S');
 
-King king_r(RKING, 1, 25);
-King king_g(GKING, 0, 25);
+King king_r("RedKing",RKING, 1, 25);
+King king_g("GreenKing", GKING, 0, 25);
 
-Gun gun_r(RGUN, 1, 15, 'S');
-Gun gun_g(GGUN, 0, 15, 'N');
+Gun gun_r("RedGun", RGUN, 1, 15, 'S');
+Gun gun_g("GreenGun", GGUN, 0, 15, 'N');
 
-//Hypercube hypercube_r(RHYPERCUBE, 1, 5);
-//Hypercube hypercube_g(GHYPERCUBE, 0, 5);
+Hypercube hypercube_r("RedHypercube", RHYPERCUBE, 1, 5);
+Hypercube hypercube_g("GreenHypercube", GHYPERCUBE, 0, 5);
 
 Board::Board()
 {
@@ -152,7 +152,7 @@ Board::first_init()
 	matrix[0][0] = &triangle_r1;
 	matrix[0][1] = &triangle_r2;
 	matrix[0][2] = &sline_r1; 
-	matrix[0][3] = &square_r5;
+	matrix[0][3] = &hypercube_r;
 	matrix[0][4] = &king_r;
 	matrix[0][5] = &gun_r;
 	matrix[0][6] = &sline_r2;
@@ -182,7 +182,7 @@ Board::first_init()
 	matrix[8][2] = &sline_g1;
 	matrix[8][3] = &gun_g;
 	matrix[8][4] = &king_g;
-	matrix[8][5] = &square_g5;
+	matrix[8][5] = &hypercube_g;
 	matrix[8][6] = &sline_g2;
 	matrix[8][7] = &triangle_g3;
 	matrix[8][8] = &triangle_g4;
@@ -237,7 +237,7 @@ Board::first_init()
 	Piece_array[1] = &triangle_r1;
 	Piece_array[2] = &triangle_r2;
 	Piece_array[21] = &sline_r1; 
-	Piece_array[35] = &square_r5;
+	Piece_array[35] = &hypercube_r;
 	Piece_array[31] = &king_r;
 	Piece_array[33] = &gun_r;
 	Piece_array[22] = &sline_r2;
@@ -267,7 +267,7 @@ Board::first_init()
 	Piece_array[25] = &sline_g1;
 	Piece_array[34] = &gun_g;
 	Piece_array[32] = &king_g;
-	Piece_array[36] = &square_g5;
+	Piece_array[36] = &hypercube_g;
 	Piece_array[26] = &sline_g2;
 	Piece_array[9] = &triangle_g3;
 	Piece_array[10] = &triangle_g4;

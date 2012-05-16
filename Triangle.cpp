@@ -5,7 +5,7 @@ Piece * Triangle::make_copy()
 	int piece_id = getId();
 	int team = getTeam();
 	int value = getValue();
-	Triangle * T = new Triangle(piece_id, team, value, oy, ox);
+	Triangle * T = new Triangle(getName(), piece_id, team, value, oy, ox);
 	return (Piece *) T;
 	
 	//cout<< T.ox << T.oy << "\n";
@@ -42,7 +42,7 @@ void Triangle::change_orientation()
 
 void Triangle::print_orientation(int id)
 {
-	cout << id << " " << oy	<< " " << ox << "\t";
+	cout << name << " " << id << " " << oy	<< " " << ox << "\t";
 }
 
 char * Triangle::get_orientation(int id)

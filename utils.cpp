@@ -56,6 +56,7 @@ void Board::draw()
 				if(Piece_array[i] != NULL)
 				{
 						Piece_array[i]->print_orientation(i);
+						cout << "\n";
 				}
 				else
 				{

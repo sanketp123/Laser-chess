@@ -5,7 +5,7 @@ Piece * Hypercube::make_copy()
 	int piece_id = getId();
 	int team = getTeam();
 	int value = getValue();
-	Hypercube * T = new Hypercube(piece_id, team, value);
+	Hypercube * T = new Hypercube(getName(), piece_id, team, value);
 	return (Piece *) T;
 	//entry = (Piece **) &T;
 	//array[piece_id] = &T;
@@ -20,7 +20,7 @@ void Hypercube::change_orientation()
 
 void Hypercube::print_orientation(int id)
 {
-	cout << id << " 0" << "\t";
+	cout << name << " " << id << " 0" << "\t";
 }
 
 char * Hypercube::get_orientation(int id)

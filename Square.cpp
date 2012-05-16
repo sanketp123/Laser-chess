@@ -5,7 +5,7 @@ Piece * Square::make_copy()
 	int piece_id = getId();
 	int team = getTeam();
 	int value = getValue();
-	Square * T = new Square(piece_id, team, value, o);
+	Square * T = new Square(getName(), piece_id, team, value, o);
 	return (Piece *) T;
 	//entry = (Piece **) &T;
 	//array[piece_id] = &T;
@@ -35,7 +35,7 @@ void Square::change_orientation()
 
 void Square::print_orientation(int id)
 {
-	cout << id << " " << o << "\t";
+	cout << name << " " << id << " " << o << "\t";
 }
 
 char * Square::get_orientation(int id)

@@ -5,7 +5,7 @@ Piece * Line::make_copy()
 	int piece_id = getId();
 	int team = getTeam();
 	int value = getValue();
-	Line  * T = new Line(piece_id, team, value, o);
+	Line  * T = new Line(getName(), piece_id, team, value, o);
 	return (Piece *) T;
 	//entry = (Piece **) &T;
 	//array[piece_id] = &T;
@@ -28,7 +28,7 @@ void Line::change_orientation()
 
 void Line::print_orientation(int id)
 {
-	cout << id << " " << o << "\t";
+	cout << name << " " << id << " " << o << "\t";
 }
 
 char * Line::get_orientation(int id)

@@ -1,5 +1,6 @@
 // All includes
 #include<iostream>
+#include<string.h>
 
 // All Macros
 
@@ -21,12 +22,10 @@
 #define RSQUARE2   14
 #define RSQUARE3   15
 #define RSQUARE4   16
-#define RSQUARE5   35
 #define GSQUARE1   17
 #define GSQUARE2   18
 #define GSQUARE3   19
 #define GSQUARE4   20
-#define GSQUARE5   36
 #define RLINESLANT1 21
 #define RLINESLANT2 22
 #define RLINE1      23
@@ -41,7 +40,8 @@
 #define GKING       32
 #define RGUN        33
 #define GGUN        34
-
+#define RHYPERCUBE  35
+#define GHYPERCUBE  36
 //All class definitions
 typedef struct
 {
@@ -65,11 +65,12 @@ class Piece
 												value = -1;	
 								}
 								
-								Piece(int x, int y, int z)
+								Piece(const char a[], int x, int y, int z)
 								{
 												piece_id = x;
 												team = y;
 												value = z;
+												strcpy(name, a);
 								}
 
 								int getId()
@@ -83,6 +84,10 @@ class Piece
 								int getValue()
 								{
 												return value;
+								}
+								const char* getName()
+								{
+												return name;
 								}
 
 								virtual Piece * make_copy(){}
@@ -124,7 +129,7 @@ class Triangle : public Piece
 	char oy;
 	
 	public:
-				Triangle(int x, int y, int z, char o1, char o2):Piece(x, y, z)
+				Triangle(const char a[], int x, int y, int z, char o1, char o2):Piece(a, x, y, z)
 				{
 					oy = o1;
 					ox = o2;
@@ -141,7 +146,7 @@ class Square : public Piece
 {
 	char o;
 	public:
-				Square(int x, int y, int z, char o1):Piece(x, y, z)
+				Square(const char a[], int x, int y, int z, char o1):Piece(a, x, y, z)
 				{
 				o = o1;
 				}
@@ -157,7 +162,7 @@ class Slantline : public Piece
 {
 	char o;	
 	public:
-				Slantline(int x, int y, int z, char o1):Piece(x, y, z)
+				Slantline(const char a[], int x, int y, int z, char o1):Piece(a, x, y, z)
 				{
 					o = o1;
 				}
@@ -173,7 +178,7 @@ class Line : public Piece
 	char o;
 	public:
 
-	Line(int x, int y, int z, char o1):Piece(x, y, z)
+	Line(const char a[], int x, int y, int z, char o1):Piece(a, x, y, z)
 	{
 		o = o1;
 	}
@@ -188,7 +193,7 @@ class Splitter : public Piece
 {
 	char o;
 	public:
-				Splitter(int x, int y, int z, char o1):Piece(x, y, z)
+				Splitter(const char a[], int x, int y, int z, char o1):Piece(a, x, y, z)
 				{
 					o = o1;
 				}
@@ -203,7 +208,7 @@ class Gun : public Piece
 {
 	char o;
 	public:
-				Gun(int x, int y, int z, char o1):Piece(x, y, z)
+				Gun(const char a[], int x, int y, int z, char o1):Piece(a, x, y, z)
 				{
 					o = o1;
 				}
@@ -217,7 +222,7 @@ class Gun : public Piece
 class King : public Piece
 {
 	public:
-				King(int x, int y, int z):Piece(x, y, z)
+				King(const char a[], int x, int y, int z):Piece(a, x, y, z)
 				{
 				}
 				Piece *  make_copy();
@@ -229,7 +234,7 @@ class King : public Piece
 class Hypercube : public Piece
 {
 	public:
-				Hypercube(int x, int y, int z):Piece(x, y, z)
+				Hypercube(const char a[], int x, int y, int z):Piece(a, x, y, z)
 				{
 				}
 				Piece *  make_copy();
