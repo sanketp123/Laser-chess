@@ -173,16 +173,17 @@ int Board::make_move(int id, int mov_dir)
 
 				matrix[t_x][t_y] = matrix[i][j];
 		}
-
-		if(matrix[i][j] != NULL)
+		else
 		{
-				//
-				// Some piece will die. Remove it from the Piece_array as well
-				//
-				Piece_array[matrix[i][j]->getId()] = NULL;
+				if(matrix[i][j] != NULL)
+				{
+						//
+						// Some piece will die. Remove it from the Piece_array as well
+						//
+						Piece_array[matrix[i][j]->getId()] = NULL;
 
+				}
 		}
-
 		matrix[i][j] = matrix[p.x][p.y];
 		matrix[p.x][p.y] = NULL;
 
@@ -488,7 +489,7 @@ Board Board::computeMoves(int level)
 
 		int best_move = computeGreenMoves(new_state, level, cost);
 
-		//cout << best_move<<"\n";
+		cout << best_move<<"\n";
 		//new_state[best_move].draw();
 		return new_state[best_move];
 }
@@ -615,7 +616,17 @@ int Board::computeGreenMoves(Board new_state[89], int level, int cost[89])
 				else
 				{
 						new_state[84].action(34);
-
+						int v = stateDifference(new_state[84], 1);
+						if(v < 0)	
+						{
+							//
+							// Killing your own piece. Invalid Move. Prune.
+							//
+										
+										cost[84] = -999;
+						}
+						else
+						{
 						int l;
 
 						Board new_state1[89];
@@ -630,6 +641,7 @@ int Board::computeGreenMoves(Board new_state[89], int level, int cost[89])
 
 						state = new_state[84].computeRedMoves(new_state1, level - 1, cost1);
 						cost[84] = cost1[state];
+						}
 				}
 
 
@@ -672,7 +684,7 @@ int Board::computeGreenMoves(Board new_state[89], int level, int cost[89])
 				state = find_cpu_state(state, max, count, cost);
 		}	
 
-//		cout << "Next state ::- " << state << "\n";
+//			cout << "Next state ::- " << state << "\n";
 		return state;
 }
 
@@ -802,7 +814,17 @@ int Board::computeRedMoves(Board new_state[89], int level, int cost[89])
 				else
 				{
 						new_state[84].action(33);
-
+						int v = stateDifference(new_state[84], 1);
+						if(v > 0)	
+						{
+							//
+							// Killing your own piece. Invalid Move. Prune.
+							//
+										
+										cost[84] = -999;
+						}
+						else
+						{
 						int l;
 
 						Board new_state1[89];
@@ -818,6 +840,7 @@ int Board::computeRedMoves(Board new_state[89], int level, int cost[89])
 
 						state = new_state[84].computeGreenMoves(new_state1, level - 1, cost1);
 						cost[84] = cost1[state];
+						}
 				}
 
 
@@ -836,7 +859,7 @@ int Board::computeRedMoves(Board new_state[89], int level, int cost[89])
 
 		for(int i = 0; i < 89; i++)
 		{
-		//		cout << "[STATE] [COST] " << i << " " << cost[i] << "\n";
+				//		cout << "[STATE] [COST] " << i << " " << cost[i] << "\n";
 				if(cost[i] != -999 && cost[i] <  min)
 				{
 						min = cost[i];
@@ -931,7 +954,63 @@ Board::computeNextLevelMoves(int id1, int id2, int j, int turn, int level, Board
 								//
 								// p gives the move direction.
 								//
-								new_state[j].make_move(i, p);
+								int invalid = 0;
+
+								invalid = new_state[j].make_move(i, p);
+								int v = stateDifference(new_state[j], 1);
+							//	cout << i << " " << j << " " << v << "\n";
+								if((turn == 1 && v < 0) || (turn == 0 && v > 0) || invalid)	
+								{
+										//
+										// Killing your own piece. Invalid Move. Prune.
+										//
+										
+										cost[j] = -999;
+								}
+								else
+								{
+										int l;
+
+										Board new_state1[89];
+										int cost1[89];
+										int state;
+
+										for(l = 0; l < 89; l++ )
+										{	
+												new_state1[l].initialize(&new_state[j]);
+												//											new_state1[l] = new Board(&new_state[j]);
+										}
+
+										if(turn)
+										{
+												//cout << "1111111111111111111\n";
+												//new_state[j].draw();
+												state = new_state[j].computeRedMoves(new_state1, level, cost1);
+										}
+										else
+										{
+												state = new_state[j].computeGreenMoves(new_state1, level, cost1);
+
+										}
+
+										//new_state[j].draw();
+										cost[j] = cost1[state];
+										//new_state1[state].draw();
+										//cout << "Here\n";
+										//exit(0);///////////////////
+								}
+						}
+
+
+						if(i != 32 && i != 36 && i != 31 && i!= 35)
+						{
+
+								//
+								// Not applicable to King and Hypercube.
+								//
+
+								new_state[j].rotate(i);
+
 								int l;
 
 								Board new_state1[89];
@@ -941,68 +1020,29 @@ Board::computeNextLevelMoves(int id1, int id2, int j, int turn, int level, Board
 								for(l = 0; l < 89; l++ )
 								{	
 										new_state1[l].initialize(&new_state[j]);
-										//											new_state1[l] = new Board(&new_state[j]);
+										//												new_state1[l] = new Board(&new_state[j]);
 								}
 
 								if(turn)
 								{
-										//cout << "1111111111111111111\n";
-										//new_state[j].draw();
 										state = new_state[j].computeRedMoves(new_state1, level, cost1);
 								}
 								else
 								{
-										state = new_state[j].computeGreenMoves(new_state1, level, cost1);
-
+										state = new_state[j].computeGreenMoves(new_state1, level, cost1);		
 								}
 
-								//new_state[j].draw();
 								cost[j] = cost1[state];
-								//new_state1[state].draw();
-								//cout << "Here\n";
-								//exit(0);///////////////////
-						}
+								j++;
+						}	
 				}
 
-
-		//
-		// Perform the rotate move.
-		//
-		//cout << i << "\n";
-		if(i != 32 && i != 36 && i != 31 && i!= 35)
-		{
 
 				//
-				// Not applicable to King and Hypercube.
+				// Perform the rotate move.
 				//
-
-				new_state[j].rotate(i);
-
-				int l;
-
-				Board new_state1[89];
-				int cost1[89];
-				int state;
-
-				for(l = 0; l < 89; l++ )
-				{	
-						new_state1[l].initialize(&new_state[j]);
-						//												new_state1[l] = new Board(&new_state[j]);
-				}
-
-				if(turn)
-				{
-						state = new_state[j].computeRedMoves(new_state1, level, cost1);
-				}
-				else
-				{
-						state = new_state[j].computeGreenMoves(new_state1, level, cost1);		
-				}
-
-				cost[j] = cost1[state];
-				j++;
-		}	
-	        //cout << "Here\n";
+				//cout << i << "\n";
+				//cout << "Here\n";
 		}
 }
 
