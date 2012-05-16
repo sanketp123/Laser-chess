@@ -7,10 +7,6 @@ Piece * Slantline::make_copy()
 	int value = getValue();
 	Slantline  * T = new Slantline(getName(), piece_id, team, value, o);
 	return (Piece *) T;
-	//entry = (Piece **) &T;
-	//array[piece_id] = &T;
-	//Piece * p = & T;
-	//return p;
 }
 
 void Slantline::change_orientation()

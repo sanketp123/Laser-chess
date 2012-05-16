@@ -7,10 +7,6 @@ Piece * Line::make_copy()
 	int value = getValue();
 	Line  * T = new Line(getName(), piece_id, team, value, o);
 	return (Piece *) T;
-	//entry = (Piece **) &T;
-	//array[piece_id] = &T;
-	//Piece * p = & T;
-	//return p;
 }
 
 void Line::change_orientation()

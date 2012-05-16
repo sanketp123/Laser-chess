@@ -7,10 +7,6 @@ Piece * Square::make_copy()
 	int value = getValue();
 	Square * T = new Square(getName(), piece_id, team, value, o);
 	return (Piece *) T;
-	//entry = (Piece **) &T;
-	//array[piece_id] = &T;
-	//Piece * p = & T;
-	//return p;
 }
 
 void Square::change_orientation()

@@ -8,16 +8,6 @@ Piece * Triangle::make_copy()
 	Triangle * T = new Triangle(getName(), piece_id, team, value, oy, ox);
 	return (Piece *) T;
 	
-	//cout<< T.ox << T.oy << "\n";
-	//entry = (Piece **) &T;
-	//cout<<"\nTriangle ";
-	//T->print_orientation(piece_id);
-	//array[piece_id] = &T;
-	//array[piece_id]->print_orientation(piece_id);
-	//return &T;
-	//Piece * p = & T;
-	//cout<<"Trinagle\n";
-	//return p;
 }
 
 void Triangle::change_orientation()

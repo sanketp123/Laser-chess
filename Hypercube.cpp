@@ -7,10 +7,6 @@ Piece * Hypercube::make_copy()
 	int value = getValue();
 	Hypercube * T = new Hypercube(getName(), piece_id, team, value);
 	return (Piece *) T;
-	//entry = (Piece **) &T;
-	//array[piece_id] = &T;
-	//Piece * p = & T;
-	//return p;
 }
 
 void Hypercube::change_orientation()

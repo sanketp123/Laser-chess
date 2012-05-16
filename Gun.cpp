@@ -7,10 +7,6 @@ Piece * Gun::make_copy()
 	int value = getValue();
 	Gun * T = new Gun(getName(), piece_id, team, value, o);
 	return (Piece *) T;
-	//entry = (Piece **) &T;
-	//array[piece_id] = &T;
-	//Piece * p = & T;
-	//return p;
 }
 
 void Gun::change_orientation()

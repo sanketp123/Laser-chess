@@ -7,10 +7,6 @@ Piece * Splitter::make_copy()
 	int value = getValue();
 	Splitter * T = new Splitter(getName(), piece_id, team, value, o);
 	return (Piece *) T;
-	//entry = (Piece **) &T;
-	//array[piece_id] = &T;
-	//Piece * p = & T;
-	//return p;
 }
 
 void Splitter::change_orientation()
@@ -59,7 +55,6 @@ int Splitter::reflect(Board * b, int i, int j, int dir)
 			//
 			
 			b->beam(i, j, 3);
-			//cout << "Went East; Now right\n";
 			return 4;
 		}
 		else if(dir == 3 || dir == 4)

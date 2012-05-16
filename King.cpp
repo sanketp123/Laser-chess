@@ -7,10 +7,6 @@ Piece * King::make_copy()
 	int value = getValue();
 	King *T = new King(getName(), piece_id, team, value);
 	return (Piece *) T;
-	//entry = (Piece **) &T;
-	//array[piece_id] = &T;
-	//Piece * p = & T;
-	//return p;
 }
 
 void King::change_orientation()
